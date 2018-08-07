@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>数据库主键、外键、索引 | Zer0ing&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="数据库," />
+  
+
+  <meta name="description" content="1. 主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库主键、外键、索引">
+<meta property="og:url" content="http://yoursite.com/2018/07/26/数据库主键、外键、索引/index.html">
+<meta property="og:site_name" content="Zer0ing&#39;s Blog">
+<meta property="og:description" content="1. 主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-07T07:37:34.987Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库主键、外键、索引">
+<meta name="twitter:description" content="1. 主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有">
+
+  
+
+  
+    <link rel="icon" href="/icon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-主键"><span class="toc-text">1. 主键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-外键"><span class="toc-text">2. 外键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-索引"><span class="toc-text">3. 索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-主键、外键和索引的对比"><span class="toc-text">4. 主键、外键和索引的对比</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-数据库主键、外键、索引" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">数据库主键、外键、索引</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.26</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>zer0ing</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="1-主键"><a href="#1-主键" class="headerlink" title="1. 主键"></a>1. 主键</h2><p>表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。</p>
+<p>如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有列的值的任何组合必须唯一。</p>
+<h2 id="2-外键"><a href="#2-外键" class="headerlink" title="2. 外键"></a>2. 外键</h2><p>外键(FK)是用于在两个表中的数据之间建立和加强链接的一列或多列的组合，可控制可在外键表中存储的数据。在外键引用中，当包含一个表的主键值的一个或多个列被另一个表中的一个或多个列引用时，就在这两个表之间创建了链接。这个列就成为第二个表的外键。</p>
+<blockquote>
+<p>互联网行业应用不推荐使用外键： 用户量大，并发度高，为此数据库服务器很容易成为性能瓶颈，尤其受IO能力限制，且不能轻易地水平扩展。</p>
+</blockquote>
+<h2 id="3-索引"><a href="#3-索引" class="headerlink" title="3. 索引"></a>3. 索引</h2><p>一个索引是存储的表中一个特定列的值数据结构（最常见的是B-Tree）。索引是在表的列上创建。所以，要记住的关键点是索引包含一个表中列的值，并且这些值存储在一个数据结构中，索引存储了指向表中某一行的指针。请记住记住这一点：<strong>索引是一种数据结构</strong>。</p>
+<ul>
+<li><p><strong>B-Tree</strong>是最常用的用于索引的数据结构。因为它们是时间复杂度低，查找、删除、插入操作都可以可以在对数时间内完成。另外一个重要原因存储在B-Tree中的数据是有序的。数据库管理系统（RDBMS）通常决定索引应该用哪些数据结构。但是，在某些情况下，你在创建索引时可以指定索引要使用的数据结构。</p>
+</li>
+<li><p><strong>哈希表</strong>是另外一种你可能看到用作索引的数据结构-这些索引通常被称为哈希索引。使用哈希索引的原因是，在寻找值时哈希表效率极高。但只适合查询键值对-也就是说查询相等的查询（例：like “WHERE name = ‘Jesus’）。哈希表的键值映射也暗示其键的存储是无序的，这就是为什么哈希索引通常不是数据库索引的默认数据结构-因为在作为索引的数据结构时，其不像B-Tree那么灵活。</p>
+</li>
+</ul>
+<h2 id="4-主键、外键和索引的对比"><a href="#4-主键、外键和索引的对比" class="headerlink" title="4. 主键、外键和索引的对比"></a>4. 主键、外键和索引的对比</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>主键</th>
+<th>外键</th>
+<th>索引   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定义</strong></td>
+<td>唯一标识一条记录，不允许重复，不允许为空</td>
+<td>表的外键是另一表的主键,外键可以重复, 可以为空</td>
+<td>该字段没有重复值，但可以有一个空值</td>
+</tr>
+<tr>
+<td><strong>作用</strong></td>
+<td>保证数据完整性</td>
+<td>和其他表建立联系</td>
+<td>提高查询排序速度 </td>
+</tr>
+<tr>
+<td><strong>个数</strong></td>
+<td>唯一</td>
+<td>可以有多个外键</td>
+<td>可以有多个唯一索引 </td>
+</tr>
+</tbody>
+</table>
+<p><strong>参考</strong>：</p>
+<ol>
+<li><a href="https://blog.csdn.net/weiliangliang111/article/details/51333169" target="_blank" rel="noopener">数据库索引到底是什么，是怎样工作的？</a></li>
+</ol>
+
+    
+  </div>
+
+  
+      <div class="git"></div>
+  
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/16/世界杯一二事/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/08/06/分布式系统中的重要的协议/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
