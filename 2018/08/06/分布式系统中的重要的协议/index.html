@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="分布式系统中有两个重要协议，包括Paxos选举协议以及两阶段提交协议。Paxos协议用于多个节点之间达成一致，往往用于总控节点的选举。两阶段提交协议用于保证跨多个节点操作的原子性，这些操作要么全部成功，要么全部失败。 1.两阶段提交协议两阶段提交协议（Two-phase Commit,2PC）通常用来实现分布式事务。在该协议中，系统包含两类节点：一类为协调者，通常只有一个，另一类为事务参与者，一般">
+<meta name="description" content="分布式系统中有两个重要协议，包括Paxos选举协议以及两阶段提交协议。Paxos协议用于多个节点之间达成一致，往往用于总控节点的选举。两阶段提交协议用于保证跨多个节点操作的原子性，这些操作要么全部成功，要么全部失败。 两阶段提交协议两阶段提交协议（Two-phase Commit,2PC）通常用来实现分布式事务。在该协议中，系统包含两类节点：一类为协调者，通常只有一个，另一类为事务参与者，一般包含">
 <meta name="keywords" content="分布式存储">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式系统中的重要的协议">
 <meta property="og:url" content="http://yoursite.com/2018/08/06/分布式系统中的重要的协议/index.html">
 <meta property="og:site_name" content="Zer0ing&#39;s Blog">
-<meta property="og:description" content="分布式系统中有两个重要协议，包括Paxos选举协议以及两阶段提交协议。Paxos协议用于多个节点之间达成一致，往往用于总控节点的选举。两阶段提交协议用于保证跨多个节点操作的原子性，这些操作要么全部成功，要么全部失败。 1.两阶段提交协议两阶段提交协议（Two-phase Commit,2PC）通常用来实现分布式事务。在该协议中，系统包含两类节点：一类为协调者，通常只有一个，另一类为事务参与者，一般">
+<meta property="og:description" content="分布式系统中有两个重要协议，包括Paxos选举协议以及两阶段提交协议。Paxos协议用于多个节点之间达成一致，往往用于总控节点的选举。两阶段提交协议用于保证跨多个节点操作的原子性，这些操作要么全部成功，要么全部失败。 两阶段提交协议两阶段提交协议（Two-phase Commit,2PC）通常用来实现分布式事务。在该协议中，系统包含两类节点：一类为协调者，通常只有一个，另一类为事务参与者，一般包含">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-07T07:27:39.360Z">
+<meta property="og:updated_time" content="2018-08-14T11:38:56.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式系统中的重要的协议">
-<meta name="twitter:description" content="分布式系统中有两个重要协议，包括Paxos选举协议以及两阶段提交协议。Paxos协议用于多个节点之间达成一致，往往用于总控节点的选举。两阶段提交协议用于保证跨多个节点操作的原子性，这些操作要么全部成功，要么全部失败。 1.两阶段提交协议两阶段提交协议（Two-phase Commit,2PC）通常用来实现分布式事务。在该协议中，系统包含两类节点：一类为协调者，通常只有一个，另一类为事务参与者，一般">
+<meta name="twitter:description" content="分布式系统中有两个重要协议，包括Paxos选举协议以及两阶段提交协议。Paxos协议用于多个节点之间达成一致，往往用于总控节点的选举。两阶段提交协议用于保证跨多个节点操作的原子性，这些操作要么全部成功，要么全部失败。 两阶段提交协议两阶段提交协议（Two-phase Commit,2PC）通常用来实现分布式事务。在该协议中，系统包含两类节点：一类为协调者，通常只有一个，另一类为事务参与者，一般包含">
 
 
 
@@ -343,10 +343,10 @@
 
       
         <p>分布式系统中有两个重要协议，包括Paxos选举协议以及两阶段提交协议。Paxos协议用于多个节点之间达成一致，往往用于总控节点的选举。两阶段提交协议用于保证跨多个节点操作的原子性，这些操作要么全部成功，要么全部失败。</p>
-<h2 id="1-两阶段提交协议"><a href="#1-两阶段提交协议" class="headerlink" title="1.两阶段提交协议"></a>1.两阶段提交协议</h2><p>两阶段提交协议（Two-phase Commit,2PC）通常用来实现分布式事务。在该协议中，系统包含两类节点：一类为协调者，通常只有一个，另一类为事务参与者，一般包含多个。</p>
+<h2 id="两阶段提交协议"><a href="#两阶段提交协议" class="headerlink" title="两阶段提交协议"></a>两阶段提交协议</h2><p>两阶段提交协议（Two-phase Commit,2PC）通常用来实现分布式事务。在该协议中，系统包含两类节点：一类为协调者，通常只有一个，另一类为事务参与者，一般包含多个。</p>
 <p>在正常的执行过程中，两阶段提交协议包含以下两个过程：</p>
-<p>阶段1：请求阶段。在请求阶段，协调者通知事务参与者准备提交或者取消事务，然后进入表决过程。在表决过程中，参与者告知协调者自己的决策：同意（事务本地执行成功）或者取消（事务本地执行失败）。</p>
-<p>阶段2：提交阶段。在提交阶段，协调者基于第一阶段的投票结果进行决策：提交或者取消。当且仅当所有的参与者同意提交事务协调者才通知所有的参与者提交事务，否则通知所有参与者取消事务。参与者在接收到协调者的消息后执行相应操作。</p>
+<p><strong>阶段1</strong>：请求阶段。在请求阶段，协调者通知事务参与者准备提交或者取消事务，然后进入表决过程。在表决过程中，参与者告知协调者自己的决策：同意（事务本地执行成功）或者取消（事务本地执行失败）。</p>
+<p><strong>阶段2</strong>：提交阶段。在提交阶段，协调者基于第一阶段的投票结果进行决策：提交或者取消。当且仅当所有的参与者同意提交事务协调者才通知所有的参与者提交事务，否则通知所有参与者取消事务。参与者在接收到协调者的消息后执行相应操作。</p>
 <p>二阶段提交协议看起来确实能够提供原子性的操作，但还是存在几个缺点：</p>
 <ol>
 <li><p>同步阻塞问题。执行过程中，所有参与者都是事务阻塞型的。当参与者占有公共资源时，其他第三方节点访问公共资源不得不处于阻塞状态。</p>
@@ -366,7 +366,7 @@
 </li>
 </ol>
 <p>总之，两阶段提交协议是阻塞协议，协议过程中需要锁住其它更新，且不能容错，并不适合高并发系统，大多数分布式系统都不采用，放弃对分布式事务的支持。</p>
-<h2 id="2-三阶段提交协议"><a href="#2-三阶段提交协议" class="headerlink" title="2. 三阶段提交协议"></a>2. 三阶段提交协议</h2><p>三阶段提交协议（Three-phase Commit，3PC）是对二阶段提交协议的改进，改动点如下：</p>
+<h2 id="三阶段提交协议"><a href="#三阶段提交协议" class="headerlink" title="三阶段提交协议"></a>三阶段提交协议</h2><p>三阶段提交协议（Three-phase Commit，3PC）是对二阶段提交协议的改进，改动点如下：</p>
 <ol>
 <li><p>引入超时机制。同时在协调者和参与者中都引入超时机制。</p>
 </li>
@@ -376,7 +376,7 @@
 <p>在DoCommit阶段，如果参与者无法及时接收到来自协调者的doCommit或者rebort请求时，会在等待超时之后，会继续进行事务的提交。（其实这个应该是基于概率来决定的，当进入第三阶段时，说明参与者在第二阶段已经收到了PreCommit请求，那么协调者产生PreCommit请求的前提条件是他在第二阶段开始之前，收到所有参与者的CanCommit响应都是Yes。（一旦参与者收到了PreCommit，意味他知道大家其实都同意修改了）所以，一句话概括就是，当进入第三阶段时，由于网络超时等原因，虽然参与者没有收到commit或者abort响应，但是他有理由相信：成功提交的几率很大。 ）</p>
 <p>相对于2PC，3PC主要解决的单点故障问题，并减少阻塞，因为一旦参与者无法及时收到来自协调者的信息之后，他会默认执行commit。而不会一直持有事务资源并处于阻塞状态。但是这种机制也会导致数据一致性问题，因为，由于网络原因，协调者发送的abort响应没有及时被参与者接收到，那么参与者在等待超时之后执行了commit操作。这样就和其他接到abort命令并执行回滚的参与者之间存在数据不一致的情况。了解了2PC和3PC之后，我们可以发现，无论是二阶段提交还是三阶段提交都无法彻底解决分布式的一致性问题。</p>
 <p><a href="http://blog.jobbole.com/89140/" target="_blank" rel="noopener">使用消息队列来避免分布式事务</a></p>
-<h2 id="3-Paxos协议"><a href="#3-Paxos协议" class="headerlink" title="3.Paxos协议"></a>3.Paxos协议</h2><p>Paxos协议用于解决多个节点之间的一致性问题。多个节点通过操作日志同步数据，如果只有一个节点为主节点，很容易确保多个节点之间操作日志的一致性。考虑主节点可能发生故障，系统需要选举新的主节点。Paxos协议正是用来实现此需求。只要保证多个节点之间操作日志的一致性，就能在这些节点上构建高可用的全局服务，例如分布式锁服务，全局命名和配置服务等。</p>
+<h2 id="Paxos协议"><a href="#Paxos协议" class="headerlink" title="Paxos协议"></a>Paxos协议</h2><p>Paxos协议用于解决多个节点之间的一致性问题。多个节点通过操作日志同步数据，如果只有一个节点为主节点，很容易确保多个节点之间操作日志的一致性。考虑主节点可能发生故障，系统需要选举新的主节点。Paxos协议正是用来实现此需求。只要保证多个节点之间操作日志的一致性，就能在这些节点上构建高可用的全局服务，例如分布式锁服务，全局命名和配置服务等。</p>
 <p>为了实现高可用性，主节点把数据以操作日志的形式同步到备节点。若主节点发生故障，备节点会提议自己成为主节点。存在的一个问题是网络分区的时候，可能会存在多个备节点（Proposer,提议者）提议。Paxos协议保证，即使存在多个提议者，也能保证所有节点最终达成一致，即选举出唯一的主节点。</p>
 <p>大多数情况下，系统只有一个提议节点，提议会很快被大多数节点接受。Paxos协议执行步骤如下：</p>
 <ol>
@@ -397,7 +397,7 @@
 <p>Paxos协议需要考虑两个问题：正确性，即只有一个提议值生效；可终止性，即最后总有一个提议值生效。</p>
 <p><strong>参考</strong>：</p>
 <ol>
-<li>杨传辉，《大规模分布式存储系统：原理解析与架构实战》</li>
+<li>《大规模分布式存储系统：原理解析与架构实战》,杨传辉</li>
 <li><a href="http://www.hollischuang.com/archives/681" target="_blank" rel="noopener">关于分布式事务、两阶段提交协议、三阶提交协议</a></li>
 <li><a href="https://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Paxos算法</a></li>
 <li><a href="http://www.hollischuang.com/archives/693" target="_blank" rel="noopener">分布式一致性算法——paxos</a></li>
@@ -580,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-两阶段提交协议"><span class="nav-number">1.</span> <span class="nav-text">1.两阶段提交协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-三阶段提交协议"><span class="nav-number">2.</span> <span class="nav-text">2. 三阶段提交协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Paxos协议"><span class="nav-number">3.</span> <span class="nav-text">3.Paxos协议</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#两阶段提交协议"><span class="nav-number">1.</span> <span class="nav-text">两阶段提交协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三阶段提交协议"><span class="nav-number">2.</span> <span class="nav-text">三阶段提交协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paxos协议"><span class="nav-number">3.</span> <span class="nav-text">Paxos协议</span></a></li></ol></div>
             
 
           </div>

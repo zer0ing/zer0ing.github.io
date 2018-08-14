@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. 主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有">
+<meta name="description" content="主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有列的值">
 <meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库主键、外键、索引">
 <meta property="og:url" content="http://yoursite.com/2018/07/26/数据库主键、外键、索引/index.html">
 <meta property="og:site_name" content="Zer0ing&#39;s Blog">
-<meta property="og:description" content="1. 主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有">
+<meta property="og:description" content="主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有列的值">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-07T07:37:34.987Z">
+<meta property="og:updated_time" content="2018-08-14T11:38:43.877Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库主键、外键、索引">
-<meta name="twitter:description" content="1. 主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有">
+<meta name="twitter:description" content="主键表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。 如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有列的值">
 
 
 
@@ -342,20 +342,20 @@
       
 
       
-        <h2 id="1-主键"><a href="#1-主键" class="headerlink" title="1. 主键"></a>1. 主键</h2><p>表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。</p>
+        <h2 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h2><p>表通常具有包含唯一标识表中每一行的值的一列或一组列。这样的一列或多列称为表的主键(PK)，用于强制表的实体完整性。由于主键约束可保证数据的唯一性，因此经常对标识列定义这种约束。</p>
 <p>如果为表指定了主键约束，数据库引擎将通过为主键列自动创建唯一索引来强制数据的唯一性。当在查询中使用主键时，此索引还允许对数据进行快速访问。如果对多列定义了主键约束，则一列中的值可能会重复，但来自主键约束定义中所有列的值的任何组合必须唯一。</p>
-<h2 id="2-外键"><a href="#2-外键" class="headerlink" title="2. 外键"></a>2. 外键</h2><p>外键(FK)是用于在两个表中的数据之间建立和加强链接的一列或多列的组合，可控制可在外键表中存储的数据。在外键引用中，当包含一个表的主键值的一个或多个列被另一个表中的一个或多个列引用时，就在这两个表之间创建了链接。这个列就成为第二个表的外键。</p>
+<h2 id="外键"><a href="#外键" class="headerlink" title="外键"></a>外键</h2><p>外键(FK)是用于在两个表中的数据之间建立和加强链接的一列或多列的组合，可控制可在外键表中存储的数据。在外键引用中，当包含一个表的主键值的一个或多个列被另一个表中的一个或多个列引用时，就在这两个表之间创建了链接。这个列就成为第二个表的外键。</p>
 <blockquote>
 <p>互联网行业应用不推荐使用外键： 用户量大，并发度高，为此数据库服务器很容易成为性能瓶颈，尤其受IO能力限制，且不能轻易地水平扩展。</p>
 </blockquote>
-<h2 id="3-索引"><a href="#3-索引" class="headerlink" title="3. 索引"></a>3. 索引</h2><p>一个索引是存储的表中一个特定列的值数据结构（最常见的是B-Tree）。索引是在表的列上创建。所以，要记住的关键点是索引包含一个表中列的值，并且这些值存储在一个数据结构中，索引存储了指向表中某一行的指针。请记住记住这一点：<strong>索引是一种数据结构</strong>。</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>一个索引是存储的表中一个特定列的值数据结构（最常见的是B-Tree）。索引是在表的列上创建。所以，要记住的关键点是索引包含一个表中列的值，并且这些值存储在一个数据结构中，索引存储了指向表中某一行的指针。请记住记住这一点：<strong>索引是一种数据结构</strong>。</p>
 <ul>
 <li><p><strong>B-Tree</strong>是最常用的用于索引的数据结构。因为它们是时间复杂度低，查找、删除、插入操作都可以可以在对数时间内完成。另外一个重要原因存储在B-Tree中的数据是有序的。数据库管理系统（RDBMS）通常决定索引应该用哪些数据结构。但是，在某些情况下，你在创建索引时可以指定索引要使用的数据结构。</p>
 </li>
 <li><p><strong>哈希表</strong>是另外一种你可能看到用作索引的数据结构-这些索引通常被称为哈希索引。使用哈希索引的原因是，在寻找值时哈希表效率极高。但只适合查询键值对-也就是说查询相等的查询（例：like “WHERE name = ‘Jesus’）。哈希表的键值映射也暗示其键的存储是无序的，这就是为什么哈希索引通常不是数据库索引的默认数据结构-因为在作为索引的数据结构时，其不像B-Tree那么灵活。</p>
 </li>
 </ul>
-<h2 id="4-主键、外键和索引的对比"><a href="#4-主键、外键和索引的对比" class="headerlink" title="4. 主键、外键和索引的对比"></a>4. 主键、外键和索引的对比</h2><table>
+<h2 id="主键、外键和索引的对比"><a href="#主键、外键和索引的对比" class="headerlink" title="主键、外键和索引的对比"></a>主键、外键和索引的对比</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -567,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-主键"><span class="nav-number">1.</span> <span class="nav-text">1. 主键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-外键"><span class="nav-number">2.</span> <span class="nav-text">2. 外键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-索引"><span class="nav-number">3.</span> <span class="nav-text">3. 索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-主键、外键和索引的对比"><span class="nav-number">4.</span> <span class="nav-text">4. 主键、外键和索引的对比</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主键"><span class="nav-number">1.</span> <span class="nav-text">主键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外键"><span class="nav-number">2.</span> <span class="nav-text">外键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">3.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主键、外键和索引的对比"><span class="nav-number">4.</span> <span class="nav-text">主键、外键和索引的对比</span></a></li></ol></div>
             
 
           </div>
