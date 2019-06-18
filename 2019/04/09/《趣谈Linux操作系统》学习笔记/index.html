@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zer0ing's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="一、入门篇01 Linux知识测验02 Linux学习路径 二、核心原理篇：第一部分 Linux综述04 快速上手Linux命令用户和密码 passwd 修改密码 useradd zeroing 添加用户  cat /etc/passwd 查看通过命令创建的用户  cat /etc/group 查看用户的组信息  浏览文件 ls -l 使用列表列出文件   -rw-r–r– 1 root root">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《趣谈Linux操作系统》学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/index.html">
+<meta property="og:site_name" content="Zer0ing&#39;s Blog">
+<meta property="og:description" content="一、入门篇01 Linux知识测验02 Linux学习路径 二、核心原理篇：第一部分 Linux综述04 快速上手Linux命令用户和密码 passwd 修改密码 useradd zeroing 添加用户  cat /etc/passwd 查看通过命令创建的用户  cat /etc/group 查看用户的组信息  浏览文件 ls -l 使用列表列出文件   -rw-r–r– 1 root root">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux学习路径.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux命令行.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux系统调用.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/X86架构.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/1M地址空间.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/grub2.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux启动过程.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/分层权限机制.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/32位系统调用执行.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/64位系统调用执行.jpg">
+<meta property="og:updated_time" content="2019-06-18T14:20:04.410Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《趣谈Linux操作系统》学习笔记">
+<meta name="twitter:description" content="一、入门篇01 Linux知识测验02 Linux学习路径 二、核心原理篇：第一部分 Linux综述04 快速上手Linux命令用户和密码 passwd 修改密码 useradd zeroing 添加用户  cat /etc/passwd 查看通过命令创建的用户  cat /etc/group 查看用户的组信息  浏览文件 ls -l 使用列表列出文件   -rw-r–r– 1 root root">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux学习路径.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/">
+
+
+
+
+
+  <title>《趣谈Linux操作系统》学习笔记 | Zer0ing's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2be418a9d846b398f81631d9692d0c17";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zer0ing's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/《趣谈Linux操作系统》学习笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zer0ing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zer0ing's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《趣谈Linux操作系统》学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T16:27:50+08:00">
+                2019-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、入门篇"><a href="#一、入门篇" class="headerlink" title="一、入门篇"></a>一、入门篇</h1><h2 id="01-Linux知识测验"><a href="#01-Linux知识测验" class="headerlink" title="01 Linux知识测验"></a>01 Linux知识测验</h2><h2 id="02-Linux学习路径"><a href="#02-Linux学习路径" class="headerlink" title="02 Linux学习路径"></a>02 Linux学习路径</h2><img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux学习路径.jpeg">
+<h1 id="二、核心原理篇：第一部分-Linux综述"><a href="#二、核心原理篇：第一部分-Linux综述" class="headerlink" title="二、核心原理篇：第一部分 Linux综述"></a>二、核心原理篇：第一部分 Linux综述</h1><h2 id="04-快速上手Linux命令"><a href="#04-快速上手Linux命令" class="headerlink" title="04 快速上手Linux命令"></a>04 快速上手Linux命令</h2><h3 id="用户和密码"><a href="#用户和密码" class="headerlink" title="用户和密码"></a>用户和密码</h3><ul>
+<li>passwd 修改密码</li>
+<li>useradd zeroing 添加用户 </li>
+<li>cat /etc/passwd 查看通过命令创建的用户 </li>
+<li>cat /etc/group 查看用户的组信息</li>
+</ul>
+<h3 id="浏览文件"><a href="#浏览文件" class="headerlink" title="浏览文件"></a>浏览文件</h3><blockquote>
+<p>ls -l 使用列表列出文件</p>
+</blockquote>
+<blockquote>
+<p>-rw-r–r– 1 root root 4096 Oct 20 2017 apt</p>
+</blockquote>
+<p>第一个字段：”-“表示普通文件，”d”表示目录；后面9个字符表示权限位，3个一组，每一组rwx表示”读””写””执行”。三组分别表示文件所属的用户权限、文件所属的组权限以及其他用户的权限。</p>
+<p>第二个字段：硬链接数目。</p>
+<p>第三个字段：所属用户。</p>
+<p>第四个字段：所属组。</p>
+<p>第五个字段：文件大小。</p>
+<p>第六个字段：文件修改日期。</p>
+<p>第七个字段：文件名。</p>
+<p>可以通过chown改变所属用户，chgrp改变所属组。</p>
+<h3 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h3><p>Linux两大体系：一个是CentOS体系，一个是Ubuntu体系，前者使用rpm,后者使用deb。</p>
+<ul>
+<li>rpm -i XXX.rpm CentOS安装软件</li>
+<li>dpkg -i XXX.deb Ubuntu安装软件</li>
+<li>rpm -qa 查看安装软件</li>
+<li>dpkg -l 查看安装软件</li>
+<li>rpm -qa| grep jdk | 是管道，用于连接两个程序，前面 rpm -qa 的输出就放进管道，作为grep的输入，grep搜索带有关键字jdk的行并且输出。</li>
+<li>rpm -qa | more和rpm -qa | less 结果分页展示 ，输入q返回命令行</li>
+<li>rpm -e 删除</li>
+<li>dpkg -r 删除</li>
+</ul>
+<p>Linux 也有自己的软件管家，CentOS 下面是 yum，Ubuntu下面是apt-get。</p>
+<ul>
+<li>yum install XXX (centos) </li>
+<li>apt-get install XXX(ubuntu)</li>
+<li>yum erase XXX 卸载</li>
+<li>apt-get purge openjdk-9-jdk 卸载</li>
+</ul>
+<p>CentOS源文件/etc/yum.repos.d/CentOS-Base.repo<br>Ubuntu源文件/etc/apt/sources.list</p>
+<ul>
+<li><p>主执行文件会放在 /usr/bin 或者 /usr/sbin下面，其他库文件放在/var下面，配置文件放在/etc下面。</p>
+</li>
+<li><p>除上述方法外，还有一种简单粗暴的方式，就是将安装好的路径直接下载下来，解压缩成为一个整的路径。利用 <strong>wget + 链接</strong> 的方式。</p>
+</li>
+<li><p>/root 或者 /home/cliu8 下面，有一个.bashrc文件，用于配置环境变量。<br>export JAVA_HOME=/root/jdk-XXX_linux-x64<br>export PATH=$JAVA_HOME/bin:$PATH</p>
+</li>
+</ul>
+<h4 id="VIM使用方式"><a href="#VIM使用方式" class="headerlink" title="VIM使用方式"></a>VIM使用方式</h4><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><ol>
+<li><p>只要文件有x执行权限，都可以到文件所在目录下，通过<strong>./filename</strong>运行程序，当然，如果放在PATH里设置的路径下，就不用./，直接输入文件名即可。</p>
+</li>
+<li><p>Linux运行程序的第二种方式，后台运行。nohup command &gt;out.file 2&gt;&amp;1 &amp;，最后的&amp;表示后台运行。1”表示文件描述符1，表示标准输出，“2”表示文件描述符2,表示标准错误输出，“2&gt;&amp;1”表示标准输入和错误输出合并，合并到out.file。</p>
+</li>
+<li><p>Linux运行程序的第三种方式，以服务的方式运行。</p>
+</li>
+</ol>
+<ul>
+<li><p>systemctl start mysql启动 MySQL，systemctl enable mysql设置开机启动。</p>
+</li>
+<li><p>shutdown -h now 立即关机 reboot 重启</p>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux命令行.jpg">
+<h2 id="05-系统调用"><a href="#05-系统调用" class="headerlink" title="05 系统调用"></a>05 系统调用</h2><img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux系统调用.jpg">
+<h1 id="三、核心原理篇：第二部分-系统初始化"><a href="#三、核心原理篇：第二部分-系统初始化" class="headerlink" title="三、核心原理篇：第二部分 系统初始化"></a>三、核心原理篇：第二部分 系统初始化</h1><h2 id="06-x86架构"><a href="#06-x86架构" class="headerlink" title="06 x86架构"></a>06 x86架构</h2><img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/X86架构.jpeg">
+<h2 id="07-从BIOS到bootloader"><a href="#07-从BIOS到bootloader" class="headerlink" title="07 从BIOS到bootloader"></a>07 从BIOS到bootloader</h2><p>x86有两种模式，一种是实模式，只能寻址1M，每个段最多64K；另一种是保护模式，对于32位系统，能够寻址4G。当系统刚刚启动的时候，CPU是处于实模式的，当需要更多内存时，切换到保护模式。</p>
+<p>系统主板有一块ROM，上面固化了一些初始化的程序，即BIOS（基本输入输出系统）。</p>
+<img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/1M地址空间.jpeg">
+<p>x86系统中，将1M空间最上面的0xF0000到0xFFFFF这64K映射给ROM.<br>电脑加电时，会做重置工作，将CS设置为0xFFFF，将IP设置为0x0000,所以第一条指令就会指向0xFFFF0,正是在ROM的范围内。</p>
+<img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/grub2.jpeg">
+<p>BIOS完成后，会找到一般位于第一个扇区的启动盘，占512字节，而且以0xAA55结束。512字节内存在代码，由Linux中的工具Grub2放置。grub2安装boot.img，从硬盘加载到内存中运行(boot.img加载grub2另一镜像core.img),core.img由lzma_decompress.img、diskboot.img和kernel.img（grub kernel，并不是linux kernel）和一系列的模块组成，功能丰富。</p>
+<p>随着加载的程序越来越多，需要从实模式切换到保护模式——lzma_decompress.img调用real_to_prot，切换到保护模式。切换到保护模式需要做很多工作，大部分与内存访问方式有关：</p>
+<ol>
+<li>启用分段。</li>
+<li>启动分页。</li>
+<li>打开其他地址线。</li>
+</ol>
+<img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/Linux启动过程.jpeg">
+<h2 id="08-内核初始化"><a href="#08-内核初始化" class="headerlink" title="08 内核初始化"></a>08 内核初始化</h2><ol>
+<li>创建样板进程, 及各个模块初始化</li>
+<li>创建管理/创建用户态进程的进程</li>
+<li>创建管理/创建内核态进程的进程</li>
+</ol>
+<h3 id="创建样板进程-及各个模块初始化"><a href="#创建样板进程-及各个模块初始化" class="headerlink" title="创建样板进程, 及各个模块初始化"></a>创建样板进程, 及各个模块初始化</h3><ul>
+<li><p>内核的启动从入口函数 start_kernel() 开始,在init/main.c文件中，start_kernel相当于内核的main函数。init_task 是系统创建的第一个进程，称为0号进程。这是唯一一个没有通过 fork 或者 kernel_thread 产生的进程，是进程列表中的第一个。</p>
+</li>
+<li><p>初始化中断, <code>trap_init()</code>. 系统调用也是通过发送中断进行, 由 <code>set_system_intr_gate()</code> 完成.</p>
+</li>
+<li>初始化内存管理模块, <code>mm_init()</code></li>
+<li>初始化进程调度模块, <code>sched_init()</code></li>
+<li>初始化基于内存的文件系统 rootfs, <code>vfs_caches_init()</code>  VFS(虚拟文件系统)将各种文件系统抽象成统一接口</li>
+<li>调用 <code>rest_init()</code> 完成其他初始化工作</li>
+</ul>
+<h3 id="创建管理-创建用户态进程的进程——1号进程"><a href="#创建管理-创建用户态进程的进程——1号进程" class="headerlink" title="创建管理/创建用户态进程的进程——1号进程"></a>创建管理/创建用户态进程的进程——1号进程</h3><ul>
+<li><code>rest_init()</code> 通过 <code>kernel_thread(kernel_init,...)</code> 创建 1号进程(工作在用户态).</li>
+<li>权限管理<ul>
+<li>x86 提供 4个 Ring 分层权限</li>
+<li>操作系统利用: Ring0-内核态(访问核心资源); Ring3-用户态(普通程序)</li>
+</ul>
+</li>
+<li>用户态调用系统调用:用户态-系统调用-保存寄存器-内核态执行系统调用-恢复寄存器-返回用户态</li>
+<li>新进程执行 kernel_init 函数, 先运行 ramdisk 的 /init 程序(位于内存中)<ul>
+<li>首先加载 ELF 文件</li>
+<li>设置用于保存用户态寄存器的结构</li>
+<li>返回进入用户态</li>
+<li>/init 加载存储设备的驱动</li>
+</ul>
+</li>
+<li>kernel_init 函数启动存储设备文件系统上的 init</li>
+</ul>
+<img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/分层权限机制.jpg">
+<h3 id="创建管理-创建内核态进程的进程——2号进程"><a href="#创建管理-创建内核态进程的进程——2号进程" class="headerlink" title="创建管理/创建内核态进程的进程——2号进程"></a>创建管理/创建内核态进程的进程——2号进程</h3><ul>
+<li><code>rest_init()</code> 通过 <code>kernel_thread(kthreadd,...)</code> 创建 2号进程(工作在内核态).</li>
+<li><code>kthreadd</code> 负责所有内核态线程的调度和管理</li>
+</ul>
+<h2 id="09-系统调用"><a href="#09-系统调用" class="headerlink" title="09 系统调用"></a>09 系统调用</h2><h3 id="glibc-对系统调用的封装"><a href="#glibc-对系统调用的封装" class="headerlink" title="glibc 对系统调用的封装"></a>glibc 对系统调用的封装</h3><p>在 glibc 的源代码中，有个文件 syscalls.list,里面列着所有glibc的函数对应的系统调用。<br>对于任何一个系统调用，会调用 DO_CALL，这也是一个宏。</p>
+<h3 id="32位系统调用执行过程"><a href="#32位系统调用执行过程" class="headerlink" title="32位系统调用执行过程"></a>32位系统调用执行过程</h3><img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/32位系统调用执行.jpg">
+<p>我们将请求参数放在寄存器里面，根据系统调用的名称，得到系统调用号，放在寄存器eax中，然后执行ENTER_KERNEL。</p>
+<p><code># define ENTER_KERNEL int $0x80</code></p>
+<p>int $0x80 就是触发一个软中断，通过它就可以陷入（trap)内核。</p>
+<p>通过 push 和 SAVE_ALL 将当前用户态的寄存器，保存在pt_regs结构中。</p>
+<p>进入内核前，保存所有寄存器，然后调用do_syscall_32_irqs_on。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static __always_inline void do_syscall_32_irqs_on(struct pt_regs *regs)</span><br><span class="line">&#123;</span><br><span class="line">	struct thread_info *ti = current_thread_info();</span><br><span class="line">	unsigned int nr = (unsigned int)regs-&gt;orig_ax;</span><br><span class="line">......</span><br><span class="line">	if (likely(nr &lt; IA32_NR_syscalls)) &#123;</span><br><span class="line">		regs-&gt;ax = ia32_sys_call_table[nr](</span><br><span class="line">			(unsigned int)regs-&gt;bx, (unsigned int)regs-&gt;cx,</span><br><span class="line">			(unsigned int)regs-&gt;dx, (unsigned int)regs-&gt;si,</span><br><span class="line">			(unsigned int)regs-&gt;di, (unsigned int)regs-&gt;bp);</span><br><span class="line">	&#125;</span><br><span class="line">	syscall_return_slowpath(regs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将系统调用号从 eax 里面取出来，然后根据系统调用号，在系统调用表sys_call_table<br>中找到对应的函数调用，并将寄存器中的参数取出作为函数参数。<br>当系统调用结束之后，在 entry_INT80_32 之后，紧接着调用的是INTERRUPT_RETURN，我们能够找到它的定义，也就iret。</p>
+<p><code>#define INTERRUPT_RETURN                iret</code></p>
+<p>iret 指令将原来用户态保存的现场恢复回来，包含代码段、指令指针寄存器等，此时用户态恢复执行。</p>
+<h3 id="64位系统调用执行过程"><a href="#64位系统调用执行过程" class="headerlink" title="64位系统调用执行过程"></a>64位系统调用执行过程</h3><p>和32位系统类似，还是将系统调用名转换为系统调用号，放到寄存器rax。这里是真正的调用，不是采用中断，而是改用syscall指令。并且传递参数的寄存器也变了。syscall指令还使用一种特殊的寄存器，称为特殊模块寄存器（MSR），这种寄存器是CPU为了完成某些特殊控制功能为目的的寄存器，其中就有系统调用。</p>
+<h3 id="系统调用表"><a href="#系统调用表" class="headerlink" title="系统调用表"></a>系统调用表</h3><h3 id="总结（64位）"><a href="#总结（64位）" class="headerlink" title="总结（64位）"></a>总结（64位）</h3><img src="/2019/04/09/《趣谈Linux操作系统》学习笔记/64位系统调用执行.jpg">
+<h1 id="四、核心原理篇：第三部分-进程管理"><a href="#四、核心原理篇：第三部分-进程管理" class="headerlink" title="四、核心原理篇：第三部分 进程管理"></a>四、核心原理篇：第三部分 进程管理</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/02/无题190402/" rel="next" title="无题190402">
+                <i class="fa fa-chevron-left"></i> 无题190402
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/12/《Netty入门与实战》学习笔记/" rel="prev" title="《Netty入门与实战》学习笔记">
+                《Netty入门与实战》学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="zer0ing">
+            
+              <p class="site-author-name" itemprop="name">zer0ing</p>
+              <p class="site-description motion-element" itemprop="description">Get busy living or get busy dying.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zeroing.young@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/ZeroingYang" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5452588095" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、入门篇"><span class="nav-text">一、入门篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-Linux知识测验"><span class="nav-text">01 Linux知识测验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#02-Linux学习路径"><span class="nav-text">02 Linux学习路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、核心原理篇：第一部分-Linux综述"><span class="nav-text">二、核心原理篇：第一部分 Linux综述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#04-快速上手Linux命令"><span class="nav-text">04 快速上手Linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户和密码"><span class="nav-text">用户和密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览文件"><span class="nav-text">浏览文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装软件"><span class="nav-text">安装软件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VIM使用方式"><span class="nav-text">VIM使用方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行程序"><span class="nav-text">运行程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#05-系统调用"><span class="nav-text">05 系统调用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、核心原理篇：第二部分-系统初始化"><span class="nav-text">三、核心原理篇：第二部分 系统初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#06-x86架构"><span class="nav-text">06 x86架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#07-从BIOS到bootloader"><span class="nav-text">07 从BIOS到bootloader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#08-内核初始化"><span class="nav-text">08 内核初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建样板进程-及各个模块初始化"><span class="nav-text">创建样板进程, 及各个模块初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建管理-创建用户态进程的进程——1号进程"><span class="nav-text">创建管理/创建用户态进程的进程——1号进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建管理-创建内核态进程的进程——2号进程"><span class="nav-text">创建管理/创建内核态进程的进程——2号进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#09-系统调用"><span class="nav-text">09 系统调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#glibc-对系统调用的封装"><span class="nav-text">glibc 对系统调用的封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#32位系统调用执行过程"><span class="nav-text">32位系统调用执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#64位系统调用执行过程"><span class="nav-text">64位系统调用执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统调用表"><span class="nav-text">系统调用表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结（64位）"><span class="nav-text">总结（64位）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、核心原理篇：第三部分-进程管理"><span class="nav-text">四、核心原理篇：第三部分 进程管理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zer0ing</span>
+
+  
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
