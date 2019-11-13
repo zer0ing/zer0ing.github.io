@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-05T03:13:00.193Z</updated>
+  <updated>2019-11-13T02:36:29.566Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【Spring】——深入理解IoC</title>
+    <link href="http://yoursite.com/2019/11/13/%E3%80%90Spring%E3%80%91%E2%80%94%E2%80%94%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3IoC/"/>
+    <id>http://yoursite.com/2019/11/13/【Spring】——深入理解IoC/</id>
+    <published>2019-11-13T01:06:24.000Z</published>
+    <updated>2019-11-13T02:36:29.566Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Spring-IoC概述"><a href="#Spring-IoC概述" class="headerlink" title="Spring IoC概述"></a>Spring IoC概述</h2><p>IoC 全称为 <code>Inversion of Control</code> ，翻译为 “控制反转”。</p><p>如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：</p><ol><li>谁控制谁</li><li>控制什么</li><li>为何是反转</li><li>哪些方面反转</li></ol><p>通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的过程，也就是说一杯橙汁需要自己创造。这种方法就对应在程序代码中直接 <code>new</code> 一个橙汁对象，橙汁全程由自己制作管理。</p><p>然而到了今时今日，由于饮品店的盛行，当想喝橙汁时，第一想法就转换成了找到饮品店的联系方式，通过电话等渠道描述需要、地址、联系方式等，下订单等待，过一会儿就会有人送来橙汁了。在该过程中并没有“主动”去创造橙汁，橙汁是由饮品店创造的，而不是你，然而也完全达到了你的要求，甚至比你创造的要好上那么一些。这个过程饮品店相当于Spring容器，我们获取橙汁对象并不是自己在程序代码中 <code>new</code> 一个对象，而是直接在Spring容器（饮品店）直接获取，饮品店管理橙汁的制作过程。</p><p>现在在看上面那四个问题，答案就显得非常明显了:</p><ol><li>谁控制谁：在传统的开发模式下，我们都是采用直接 <code>new</code> 一个对象的方式来创建对象，也就是说你依赖的对象直接由你自己控制，有了 IoC 容器后，则直接由 IoC 容器来控制。所以“谁控制谁”，当然是 IoC 容器控制对象。</li><li>控制什么：控制对象。</li><li>为何是反转：没有 IoC 的时候我们都是在自己代码中主动去创建被依赖的对象，这是正转。但是有了 IoC 后，所依赖的对象直接由 IoC 容器创建后注入到被注入的对象中，依赖的对象由原来的主动获取变成被动接受，所以是反转。</li><li>哪些方面反转：所依赖对象的获取被反转。</li></ol><h3 id="注入形式"><a href="#注入形式" class="headerlink" title="注入形式"></a>注入形式</h3><p><code>IoC Service Provider</code>为被注入对象提供被依赖对象也有如下几种方式：构造方法注入、setter方法注入、接口注入。</p><ol><li>构造方法注入<br>构造器注入，顾名思义就是被注入的对象通过在其构造方法中声明依赖对象的参数列表，让外部知道它需要哪些依赖对象。</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Consumer(OrangeJuice orangeJuice) &#123;</span><br><span class="line">    this.orangeJuice = orangeJuice;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ol start="2"><li>setter方法注入</li></ol><p>对于 JavaBean 对象而言，我们一般都是通过 getter 和 setter 方法来访问和设置对象的属性。所以，当前对象只需要为其所依赖的对象提供相对应的 setter 方法，就可以通过该方法将相应的依赖对象设置到被注入对象中。如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Consumer &#123;</span><br><span class="line"></span><br><span class="line">    private OrangeJuice orangeJuice;</span><br><span class="line"></span><br><span class="line">    public void setOrangeJuice(OrangeJuice orangeJuice) &#123;</span><br><span class="line">        this.orangeJuice = orangeJuice;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>相比于构造器注入，setter 方式注入会显得比较宽松灵活些，它可以在任何时候进行注入（当然是在使用依赖对象之前），</p><ol start="3"><li>接口注入</li></ol><p>接口方式注入带有侵入性，因为它需要被依赖的对象实现不必要的接口，一般都不推荐这种方式。</p><h2 id="Spring-体系结构"><a href="#Spring-体系结构" class="headerlink" title="Spring 体系结构"></a>Spring 体系结构</h2><h3 id="Resource-体系"><a href="#Resource-体系" class="headerlink" title="Resource 体系"></a>Resource 体系</h3><p><code>org.springframework.core.io.Resource</code> 是对资源的抽象, 不同实现类代表了对不同资源的访问策略，如 ClassPathResource、RLResource、FileSystemResource 等。</p><h3 id="ResourceLoader-体系"><a href="#ResourceLoader-体系" class="headerlink" title="ResourceLoader 体系"></a>ResourceLoader 体系</h3><p>有了资源，就应该有资源加载，Spring 利用<code>org.springframework.core.io.ResourceLoader</code>来进行统一资源加载，类图如下：</p><img src="/2019/11/13/【Spring】——深入理解IoC/SpringResourceLoader类图.png"><h3 id="BeanFactory-体系"><a href="#BeanFactory-体系" class="headerlink" title="BeanFactory 体系"></a>BeanFactory 体系</h3><p><code>org.springframework.beans.factory.BeanFactory</code>，是一个非常纯粹的 bean 容器，它是 IoC 必备的数据结构，其中 BeanDefinition 是它的基本结构。BeanFactory 内部维护着一个BeanDefinition map ，并可根据 BeanDefinition 的描述进行 bean 的创建和管理。</p><ul><li>BeanFactory 有三个直接子类 ListableBeanFactory、HierarchicalBeanFactory 和 AutowireCapableBeanFactory 。</li><li>DefaultListableBeanFactory 为默认实现，它实现了所有接口。</li></ul><img src="/2019/11/13/【Spring】——深入理解IoC/SpringBeanFactory类图.png"><h3 id="BeanDefinition-体系"><a href="#BeanDefinition-体系" class="headerlink" title="BeanDefinition 体系"></a>BeanDefinition 体系</h3><p><code>org.springframework.beans.factory.config.BeanDefinition</code> ，用来描述 Spring 中的 Bean 对象。</p><img src="/2019/11/13/【Spring】——深入理解IoC/SpringBeanDefinition类图.png"><h3 id="BeanDefinitionReader-体系"><a href="#BeanDefinitionReader-体系" class="headerlink" title="BeanDefinitionReader 体系"></a>BeanDefinitionReader 体系</h3><p><code>org.springframework.beans.factory.support.BeanDefinitionReader</code> 的作用是读取 Spring 的配置文件的内容，并将其转换成 Ioc 容器内部的数据结构 ：BeanDefinition 。</p><img src="/2019/11/13/【Spring】——深入理解IoC/SpringBeanDefinitionReader类图.png"><h3 id="ApplicationContext-体系"><a href="#ApplicationContext-体系" class="headerlink" title="ApplicationContext 体系"></a>ApplicationContext 体系</h3><p><code>org.springframework.context.ApplicationContext</code>，它叫做应用上下文，是应用层容器。它继承 BeanFactory ，所以它是 BeanFactory 的扩展升级版。由于 ApplicationContext 的结构就决定了它与 BeanFactory 的不同，其主要区别有：</p><ol><li>继承 <code>org.springframework.context.MessageSource</code> 接口，提供国际化的标准访问策略。</li><li>继承 <code>org.springframework.context.ApplicationEventPublisher</code> 接口，提供强大的事件机制。</li><li>扩展 ResourceLoader ，可以用来加载多种 Resource ，可以灵活访问不同的资源。</li><li>对 Web 应用的支持。</li></ol><img src="/2019/11/13/【Spring】——深入理解IoC/SpringApplicationContext类图.png">]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Spring-IoC概述&quot;&gt;&lt;a href=&quot;#Spring-IoC概述&quot; class=&quot;headerlink&quot; title=&quot;Spring IoC概述&quot;&gt;&lt;/a&gt;Spring IoC概述&lt;/h2&gt;&lt;p&gt;IoC 全称为 &lt;code&gt;Inversion of Con
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>浅谈SPI机制</title>
