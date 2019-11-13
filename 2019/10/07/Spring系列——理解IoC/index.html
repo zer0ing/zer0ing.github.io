@@ -119,21 +119,23 @@
 
 
 
-<meta name="description" content="SPI的概念面向的对象的设计里，我们一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。为了实现在模块装配的时候不用在程序里动态指明，这就需要一种服务发现机制。SPI 就是提供这样的一个机制：为某个接口寻找服务实现的机制。 SPI 全称为Service Provider Interface，是一种服务发">
+<meta name="description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈SPI机制">
-<meta property="og:url" content="http://yoursite.com/2019/09/04/浅谈SPI机制/index.html">
+<meta property="og:title" content="Spring系列——理解IoC">
+<meta property="og:url" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/index.html">
 <meta property="og:site_name" content="Zer0ing&#39;s Blog">
-<meta property="og:description" content="SPI的概念面向的对象的设计里，我们一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。为了实现在模块装配的时候不用在程序里动态指明，这就需要一种服务发现机制。SPI 就是提供这样的一个机制：为某个接口寻找服务实现的机制。 SPI 全称为Service Provider Interface，是一种服务发">
+<meta property="og:description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/09/04/浅谈SPI机制/API对比SPI.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/04/浅谈SPI机制/JavaSPI测试结果.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/09/04/浅谈SPI机制/DubboSPI测试结果.jpg">
-<meta property="og:updated_time" content="2019-11-13T08:20:55.976Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringResourceLoader类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringBeanFactory类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringBeanDefinition类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringBeanDefinitionReader类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringApplicationContext类图.png">
+<meta property="og:updated_time" content="2019-11-13T13:18:27.097Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈SPI机制">
-<meta name="twitter:description" content="SPI的概念面向的对象的设计里，我们一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。为了实现在模块装配的时候不用在程序里动态指明，这就需要一种服务发现机制。SPI 就是提供这样的一个机制：为某个接口寻找服务实现的机制。 SPI 全称为Service Provider Interface，是一种服务发">
-<meta name="twitter:image" content="http://yoursite.com/2019/09/04/浅谈SPI机制/API对比SPI.png">
+<meta name="twitter:title" content="Spring系列——理解IoC">
+<meta name="twitter:description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringResourceLoader类图.png">
 
 
 
@@ -163,13 +165,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/09/04/浅谈SPI机制/">
+  <link rel="canonical" href="http://yoursite.com/2019/10/07/Spring系列——理解IoC/">
 
 
 
 
 
-  <title>浅谈SPI机制 | Zer0ing's Blog</title>
+  <title>Spring系列——理解IoC | Zer0ing's Blog</title>
   
 
 
@@ -320,7 +322,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/04/浅谈SPI机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/Spring系列——理解IoC/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zer0ing">
@@ -337,7 +339,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">浅谈SPI机制</h1>
+          <h1 class="post-title" itemprop="name headline">Spring系列——理解IoC</h1>
         
 
         <div class="post-meta">
@@ -349,8 +351,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-04T15:13:34+08:00">
-                2019-09-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-07T09:06:24+08:00">
+                2019-10-07
               </time>
             
 
@@ -387,51 +389,55 @@
       
 
       
-        <h3 id="SPI的概念"><a href="#SPI的概念" class="headerlink" title="SPI的概念"></a>SPI的概念</h3><p>面向的对象的设计里，我们一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。为了实现在模块装配的时候不用在程序里动态指明，这就需要一种服务发现机制。SPI 就是提供这样的一个机制：为某个接口寻找服务实现的机制。</p>
-<p>SPI 全称为<code>Service Provider Interface</code>，是一种服务发现机制。SPI 的本质是将接口实现类的全限定名配置在文件中，并由服务加载器读取配置文件，加载实现类。这样可以在运行时，动态为接口替换实现类。正因此特性，我们可以很容易的通过 SPI 机制为我们的程序提供拓展功能。</p>
-<h4 id="SPI对比API"><a href="#SPI对比API" class="headerlink" title="SPI对比API"></a>SPI对比API</h4><img src="/2019/09/04/浅谈SPI机制/API对比SPI.png">
-<p><strong>API</strong>:</p>
+        <h3 id="Spring-IoC概述"><a href="#Spring-IoC概述" class="headerlink" title="Spring IoC概述"></a>Spring IoC概述</h3><p>IoC 全称为 <code>Inversion of Control</code> ，翻译为 “控制反转”。</p>
+<p>如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：</p>
 <ol>
-<li>概念上更接近实现方</li>
-<li>组织上位于实现方所在的包中</li>
-<li>实现和接口在一个包中</li>
+<li>谁控制谁</li>
+<li>控制什么</li>
+<li>为何是反转</li>
+<li>哪些方面反转</li>
 </ol>
-<p><strong>SPI</strong>:</p>
+<p>通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的过程，也就是说一杯橙汁需要自己创造。这种方法就对应在程序代码中直接 <code>new</code> 一个橙汁对象，橙汁全程由自己制作管理。</p>
+<p>然而到了今时今日，由于饮品店的盛行，当想喝橙汁时，第一想法就转换成了找到饮品店的联系方式，通过电话等渠道描述需要、地址、联系方式等，下订单等待，过一会儿就会有人送来橙汁了。在该过程中并没有“主动”去创造橙汁，橙汁是由饮品店创造的，而不是你，然而也完全达到了你的要求，甚至比你创造的要好上那么一些。这个过程饮品店相当于Spring容器，我们获取橙汁对象并不是自己在程序代码中 <code>new</code> 一个对象，而是直接在Spring容器（饮品店）直接获取，饮品店管理橙汁的制作过程。</p>
+<p>现在在看上面那四个问题，答案就显得非常明显了:</p>
 <ol>
-<li>概念上更依赖调用方</li>
-<li>组织上位于调用方所在的包中</li>
-<li>实现位于独立的包中（也可认为在提供方中）</li>
+<li><strong>谁控制谁</strong>：在传统的开发模式下，我们都是采用直接 <code>new</code> 一个对象的方式来创建对象，也就是说你依赖的对象直接由你自己控制，有了 IoC 容器后，则直接由 IoC 容器来控制。所以“谁控制谁”，当然是 IoC 容器控制对象。</li>
+<li><strong>控制什么</strong>：控制对象。</li>
+<li><strong>为何是反转</strong>：没有 IoC 的时候我们都是在自己代码中主动去创建被依赖的对象，这是正转。但是有了 IoC 后，所依赖的对象直接由 IoC 容器创建后注入到被注入的对象中，依赖的对象由原来的主动获取变成被动接受，所以是反转。</li>
+<li><strong>哪些方面反转</strong>：所依赖对象的获取被反转。</li>
 </ol>
-<h3 id="Java-SPI"><a href="#Java-SPI" class="headerlink" title="Java SPI"></a>Java SPI</h3><p>在JDK6里面引进的一个新的特性<code>ServiceLoader</code>，它主要是用来装载一系列的service provider。而且<code>ServiceLoader</code>可以通过service provider的配置文件来装载指定的service provider。当服务的提供者，提供了服务接口的一种实现之后，我们只需要在jar包的<code>META-INF/services/</code>目录里同时创建一个以服务接口命名的文件。该文件里就是实现该服务接口的具体实现类。而当外部程序装配这个模块的时候，就能通过该jar包<code>META-INF/services/</code>里的配置文件找到具体的实现类名，并装载实例化，完成模块的注入。</p>
-<h4 id="Java-SPI-示例"><a href="#Java-SPI-示例" class="headerlink" title="Java SPI 示例"></a>Java SPI 示例</h4><p>前面简单介绍了 SPI 机制的原理，本节通过一个示例演示 Java SPI 的使用方法。首先，我们定义一个接口，名称为 Robot。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Robot</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接下来定义两个实现类，分别为 OptimusPrime 和 Bumblebee。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OptimusPrime</span> <span class="keyword">implements</span> <span class="title">Robot</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello, I am Optimus Prime."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bumblebee</span> <span class="keyword">implements</span> <span class="title">Robot</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello, I am Bumblebee."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接下来 <code>META-INF/services</code> 文件夹下创建一个文件，名称为 Robot 的全限定名 org.apache.spi.Robot。文件内容为实现类的全限定的类名，如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org<span class="selector-class">.apache</span><span class="selector-class">.spi</span><span class="selector-class">.OptimusPrime</span></span><br><span class="line">org<span class="selector-class">.apache</span><span class="selector-class">.spi</span><span class="selector-class">.Bumblebee</span></span><br></pre></td></tr></table></figure>
-<p>做好所需的准备工作，接下来编写代码进行测试。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaSPITest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ServiceLoader&lt;Robot&gt; serviceLoader = ServiceLoader.load(Robot.class);</span><br><span class="line">        System.out.println(<span class="string">"Java SPI"</span>);</span><br><span class="line">        serviceLoader.forEach(Robot::sayHello);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后来看一下测试结果，从测试结果可以看出，我们的两个实现类被成功的加载，并输出了相应的内容。</p>
-<img src="/2019/09/04/浅谈SPI机制/JavaSPI测试结果.jpg">
-<h3 id="DriverManager-SPI"><a href="#DriverManager-SPI" class="headerlink" title="DriverManager SPI"></a>DriverManager SPI</h3><p><code>DriverManager</code> 是JDBC里管理和注册不同数据库driver的工具类。针对一个数据库 可能会存在着不同的数据库驱动实现，我们在使用特定的驱动实现时不希望修改现有的代码才能达到目的，而希望通过一个简单的配置就可以达到效果。比如，我们现在有一个数据库的驱动A，我们希望在程序里使用它而不修改代码。一种理想的选择就是我们将驱动A的信息加入到一个配置文件中，程序通过读取配置文件信息将A加载进来。而以后如果我们希望改用另外一个驱动B的时候，我们只需要将配置文件里的信息修改成驱动B即可。</p>
-<p>我们在运用 <code>Class.forName(&quot;com.mysql.jdbc.Driver&quot;)</code>加载mysql驱动后，就会执行其中的静态代码把driver注册到<code>DriverManager</code>中，以便后续的使用。代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.mysql.jdbc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Driver</span> <span class="keyword">extends</span> <span class="title">NonRegisteringDriver</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">sql</span>.<span class="title">Driver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Driver</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DriverManager.registerDriver(<span class="keyword">new</span> Driver());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException var1) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Can't register driver!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里可以看到，不同的驱动实现了相同的接口<code>java.sql.Driver</code>，然后通过<code>registerDriver</code>把当前driver加载到<code>DriverManager</code>中<br>这就体现了使用方提供规则，提供方根据规则把自己加载到使用方中的SPI思想。查看<code>DriverManager</code>的源码，可以看到其内部的静态代码块中有一个<code>loadInitialDrivers</code>方法，在注释中我们看到用到了上文提到的SPI工具类<code>ServiceLoader</code>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Load the initial JDBC drivers by checking the System property</span></span><br><span class="line"><span class="comment">* jdbc.properties and then use the &#123;<span class="doctag">@code</span> ServiceLoader&#125; mechanism</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">	loadInitialDrivers();</span><br><span class="line">	println(<span class="string">"JDBC DriverManager initialized"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>点进方法，看到方法里有如下代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);</span><br><span class="line">Iterator&lt;Driver&gt; drivers = loadedDrivers.iterator();</span><br><span class="line">println(<span class="string">"DriverManager.initialize: jdbc.drivers = "</span> + loadedDrivers);</span><br></pre></td></tr></table></figure>
-<p>可见，<code>DriverManager</code>初始化时也运用了SPI机制，使用<code>ServiceLoader</code>把写到配置文件里的Driver都加载了进来。我们打开mysql-connector-java的jar包，果然在<code>META-INF/services</code>下发现了上文中提到的接口路径，打开里面的内容，可以看到是<code>com.mysql.jdbc.Driver</code>。</p>
-<h3 id="Dubbo-SPI"><a href="#Dubbo-SPI" class="headerlink" title="Dubbo SPI"></a>Dubbo SPI</h3><p>SPI 机制在第三方框架中也有所应用，比如 Dubbo 就是通过 SPI 机制加载所有的组件。Dubbo 并未使用 Java SPI，而是重新实现了一套功能更强的 SPI 机制。Dubbo SPI 的相关逻辑被封装在了<code>ExtensionLoader</code> 类中，通过 <code>ExtensionLoader</code>，我们可以加载指定的实现类。Dubbo SPI 所需的配置文件需放置在 <code>META-INF/dubbo</code>路径下，配置内容如下。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">optimusPrime = org<span class="selector-class">.apache</span><span class="selector-class">.spi</span><span class="selector-class">.OptimusPrime</span></span><br><span class="line">bumblebee = org<span class="selector-class">.apache</span><span class="selector-class">.spi</span><span class="selector-class">.Bumblebee</span></span><br></pre></td></tr></table></figure>
-<p>与 Java SPI 实现类配置不同，Dubbo SPI 是通过键值对的方式进行配置，这样我们可以按需加载指定的实现类。另外，在测试 Dubbo SPI 时，需要在 Robot 接口上标注<code>@SPI</code>注解。下面来演示 Dubbo SPI 的用法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboSPITest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ExtensionLoader&lt;Robot&gt; extensionLoader = </span><br><span class="line">            ExtensionLoader.getExtensionLoader(Robot.class);</span><br><span class="line">        Robot optimusPrime = extensionLoader.getExtension(<span class="string">"optimusPrime"</span>);</span><br><span class="line">        optimusPrime.sayHello();</span><br><span class="line">        Robot bumblebee = extensionLoader.getExtension(<span class="string">"bumblebee"</span>);</span><br><span class="line">        bumblebee.sayHello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试结果如下：</p>
-<img src="/2019/09/04/浅谈SPI机制/DubboSPI测试结果.jpg">
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本篇文章简单分别介绍了SPI机制的概念，以及Java SPI ，DriverManager SPI 与 Dubbo SPI 用法。</p>
+<h4 id="注入方式"><a href="#注入方式" class="headerlink" title="注入方式"></a>注入方式</h4><p><code>IoC Service Provider</code>为被注入对象提供被依赖对象也有如下几种方式：构造方法注入、setter方法注入、接口注入。</p>
+<h5 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a>构造方法注入</h5><p>构造器注入，顾名思义就是被注入的对象通过在其构造方法中声明依赖对象的参数列表，让外部知道它需要哪些依赖对象。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Consumer(<span class="keyword">OrangeJuice </span><span class="keyword">orangeJuice) </span>&#123;</span><br><span class="line">    this.<span class="keyword">orangeJuice </span>= <span class="keyword">orangeJuice;</span></span><br><span class="line"><span class="keyword">&#125;</span></span><br></pre></td></tr></table></figure>
+<h5 id="setter方法注入"><a href="#setter方法注入" class="headerlink" title="setter方法注入"></a>setter方法注入</h5><p>对于 JavaBean 对象而言，我们一般都是通过 getter 和 setter 方法来访问和设置对象的属性。所以，当前对象只需要为其所依赖的对象提供相对应的 setter 方法，就可以通过该方法将相应的依赖对象设置到被注入对象中。如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OrangeJuice orangeJuice;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrangeJuice</span><span class="params">(OrangeJuice orangeJuice)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orangeJuice = orangeJuice;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相比于构造器注入，setter 方式注入会显得比较宽松灵活些，它可以在任何时候进行注入（当然是在使用依赖对象之前），</p>
+<h5 id="接口注入"><a href="#接口注入" class="headerlink" title="接口注入"></a>接口注入</h5><p>接口方式注入带有侵入性，因为它需要被依赖的对象实现不必要的接口，一般都不推荐这种方式。</p>
+<h3 id="Spring-体系结构"><a href="#Spring-体系结构" class="headerlink" title="Spring 体系结构"></a>Spring 体系结构</h3><h4 id="Resource-体系"><a href="#Resource-体系" class="headerlink" title="Resource 体系"></a>Resource 体系</h4><p><code>org.springframework.core.io.Resource</code> 是对资源的抽象, 不同实现类代表了对不同资源的访问策略，如 ClassPathResource、RLResource、FileSystemResource 等。</p>
+
+<h4 id="ResourceLoader-体系"><a href="#ResourceLoader-体系" class="headerlink" title="ResourceLoader 体系"></a>ResourceLoader 体系</h4><p>有了资源，就应该有资源加载，Spring 利用<code>org.springframework.core.io.ResourceLoader</code>来进行统一资源加载，类图如下：</p>
+<img src="/2019/10/07/Spring系列——理解IoC/SpringResourceLoader类图.png">
+<h4 id="BeanFactory-体系"><a href="#BeanFactory-体系" class="headerlink" title="BeanFactory 体系"></a>BeanFactory 体系</h4><p><code>org.springframework.beans.factory.BeanFactory</code>，是一个非常纯粹的 bean 容器，它是 IoC 必备的数据结构，其中 BeanDefinition 是它的基本结构。BeanFactory 内部维护着一个BeanDefinition map ，并可根据 BeanDefinition 的描述进行 bean 的创建和管理。</p>
+<ul>
+<li>BeanFactory 有三个直接子类 ListableBeanFactory、HierarchicalBeanFactory 和 AutowireCapableBeanFactory 。</li>
+<li>DefaultListableBeanFactory 为默认实现，它实现了所有接口。</li>
+</ul>
+<img src="/2019/10/07/Spring系列——理解IoC/SpringBeanFactory类图.png">
+<h4 id="BeanDefinition-体系"><a href="#BeanDefinition-体系" class="headerlink" title="BeanDefinition 体系"></a>BeanDefinition 体系</h4><p><code>org.springframework.beans.factory.config.BeanDefinition</code> ，用来描述 Spring 中的 Bean 对象。</p>
+<img src="/2019/10/07/Spring系列——理解IoC/SpringBeanDefinition类图.png">
+<h4 id="BeanDefinitionReader-体系"><a href="#BeanDefinitionReader-体系" class="headerlink" title="BeanDefinitionReader 体系"></a>BeanDefinitionReader 体系</h4><p><code>org.springframework.beans.factory.support.BeanDefinitionReader</code> 的作用是读取 Spring 的配置文件的内容，并将其转换成 Ioc 容器内部的数据结构 ：BeanDefinition 。</p>
+<img src="/2019/10/07/Spring系列——理解IoC/SpringBeanDefinitionReader类图.png">
+<h4 id="ApplicationContext-体系"><a href="#ApplicationContext-体系" class="headerlink" title="ApplicationContext 体系"></a>ApplicationContext 体系</h4><p><code>org.springframework.context.ApplicationContext</code>，它叫做应用上下文，是应用层容器。它继承 BeanFactory ，所以它是 BeanFactory 的扩展升级版。由于 ApplicationContext 的结构就决定了它与 BeanFactory 的不同，其主要区别有：</p>
+<ol>
+<li>继承 <code>org.springframework.context.MessageSource</code> 接口，提供国际化的标准访问策略。</li>
+<li>继承 <code>org.springframework.context.ApplicationEventPublisher</code> 接口，提供强大的事件机制。</li>
+<li>扩展 ResourceLoader ，可以用来加载多种 Resource ，可以灵活访问不同的资源。</li>
+<li>对 Web 应用的支持。</li>
+</ol>
+<img src="/2019/10/07/Spring系列——理解IoC/SpringApplicationContext类图.png">
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文主要介绍 IoC 的概念，以及 IoC 的三种注入方式，然后介绍了Spring的六大体系，包括Resource、ResourceLoader、BeanFactory、BeanDefinition、BeanDefinitionReader以及ApplicationContext，后续将详细介绍这些体系的相关源码。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/28909673" target="_blank" rel="noopener">Java SPI思想梳理</a></li>
-<li><a href="http://dubbo.apache.org/zh-cn/docs/source_code_guide/dubbo-spi.html" target="_blank" rel="noopener">Dubbo SPI</a></li>
-<li><a href="https://www.cnblogs.com/happyframework/archive/2013/09/17/3325560.html" target="_blank" rel="noopener">设计原则：小议 SPI 和 API</a></li>
+<li><a href="http://svip.iocoder.cn/Spring/IoC-intro/" target="_blank" rel="noopener">【死磕 Spring】—— IoC 之深入理解 Spring IoC</a></li>
 </ol>
 
       
@@ -457,14 +463,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/09/04/浅谈SPI机制/" rel="next" title="浅谈SPI机制">
+                <i class="fa fa-chevron-left"></i> 浅谈SPI机制
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/10/07/Spring系列——理解IoC/" rel="prev" title="Spring系列——理解IoC">
-                Spring系列——理解IoC <i class="fa fa-chevron-right"></i>
+              <a href="/2019/10/13/Spring系列——统一资源加载/" rel="prev" title="Spring系列——统一资源加载">
+                Spring系列——统一资源加载 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -610,7 +620,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPI的概念"><span class="nav-text">SPI的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SPI对比API"><span class="nav-text">SPI对比API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-SPI"><span class="nav-text">Java SPI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-SPI-示例"><span class="nav-text">Java SPI 示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DriverManager-SPI"><span class="nav-text">DriverManager SPI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo-SPI"><span class="nav-text">Dubbo SPI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-IoC概述"><span class="nav-text">Spring IoC概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注入方式"><span class="nav-text">注入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#构造方法注入"><span class="nav-text">构造方法注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#setter方法注入"><span class="nav-text">setter方法注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#接口注入"><span class="nav-text">接口注入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-体系结构"><span class="nav-text">Spring 体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Resource-体系"><span class="nav-text">Resource 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ResourceLoader-体系"><span class="nav-text">ResourceLoader 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanFactory-体系"><span class="nav-text">BeanFactory 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanDefinition-体系"><span class="nav-text">BeanDefinition 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanDefinitionReader-体系"><span class="nav-text">BeanDefinitionReader 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ApplicationContext-体系"><span class="nav-text">ApplicationContext 体系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
