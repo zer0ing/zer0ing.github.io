@@ -119,19 +119,19 @@
 
 
 
-<meta name="description" content="Bean在容器中从发现到使用有以下过程：定位、装载、注册。   定位：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。 装载：解析 Resource 资源，将用户定义的 Bean 表示成IoC容器的内部数据结构：BeanDefinition。 在IoC容器内部维护着一个BeanDefinition Map的数据结构。 在配置文件中每一个&amp;lt;bean&amp;gt;都对应着一个 Bea">
+<meta name="description" content="[TOC] Bean在容器中从发现到使用有以下过程：定位资源文件、装载 BeanDefinition、注册 BeanDefinition。   定位资源文件：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。 装载 BeanDefinition：解析 Resource 资源，将用户定义的 Bean 表示成IoC容器的内部数据结构：BeanDefinition。 在IoC容器内部维护">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring系列——IoC之Bean的装载和注册">
 <meta property="og:url" content="http://yoursite.com/2019/10/20/Spring系列——IoC之Bean的装载和注册/index.html">
 <meta property="og:site_name" content="Zer0ing&#39;s Blog">
-<meta property="og:description" content="Bean在容器中从发现到使用有以下过程：定位、装载、注册。   定位：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。 装载：解析 Resource 资源，将用户定义的 Bean 表示成IoC容器的内部数据结构：BeanDefinition。 在IoC容器内部维护着一个BeanDefinition Map的数据结构。 在配置文件中每一个&amp;lt;bean&amp;gt;都对应着一个 Bea">
+<meta property="og:description" content="[TOC] Bean在容器中从发现到使用有以下过程：定位资源文件、装载 BeanDefinition、注册 BeanDefinition。   定位资源文件：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。 装载 BeanDefinition：解析 Resource 资源，将用户定义的 Bean 表示成IoC容器的内部数据结构：BeanDefinition。 在IoC容器内部维护">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/20/Spring系列——IoC之Bean的装载和注册/Bean过程.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/20/Spring系列——IoC之Bean的装载和注册/判断验证方式流程图.png">
-<meta property="og:updated_time" content="2019-11-15T09:14:02.321Z">
+<meta property="og:updated_time" content="2019-11-19T09:13:08.044Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring系列——IoC之Bean的装载和注册">
-<meta name="twitter:description" content="Bean在容器中从发现到使用有以下过程：定位、装载、注册。   定位：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。 装载：解析 Resource 资源，将用户定义的 Bean 表示成IoC容器的内部数据结构：BeanDefinition。 在IoC容器内部维护着一个BeanDefinition Map的数据结构。 在配置文件中每一个&amp;lt;bean&amp;gt;都对应着一个 Bea">
+<meta name="twitter:description" content="[TOC] Bean在容器中从发现到使用有以下过程：定位资源文件、装载 BeanDefinition、注册 BeanDefinition。   定位资源文件：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。 装载 BeanDefinition：解析 Resource 资源，将用户定义的 Bean 表示成IoC容器的内部数据结构：BeanDefinition。 在IoC容器内部维护">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/20/Spring系列——IoC之Bean的装载和注册/Bean过程.png">
 
 
@@ -386,16 +386,17 @@
       
 
       
-        <p>Bean在容器中从发现到使用有以下过程：<strong>定位</strong>、<strong>装载</strong>、<strong>注册</strong>。</p>
+        <p>[TOC]</p>
+<p>Bean在容器中从发现到使用有以下过程：<strong>定位资源文件</strong>、<strong>装载 BeanDefinition</strong>、<strong>注册 BeanDefinition</strong>。</p>
 <img src="/2019/10/20/Spring系列——IoC之Bean的装载和注册/Bean过程.png">
 <ul>
-<li><strong>定位</strong>：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。</li>
-<li><strong>装载</strong>：解析 Resource 资源，将用户定义的 Bean 表示成IoC容器的内部数据结构：BeanDefinition。<ul>
+<li><strong>定位资源文件</strong>：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。</li>
+<li><strong>装载 BeanDefinition</strong>：解析 Resource 资源，将用户定义的 Bean 表示成IoC容器的内部数据结构：BeanDefinition。<ul>
 <li>在IoC容器内部维护着一个BeanDefinition Map的数据结构。</li>
 <li>在配置文件中每一个<code>&lt;bean&gt;</code>都对应着一个 BeanDefinition 对象。</li>
 </ul>
 </li>
-<li><strong>注册</strong>：向IoC容器注册在第二步解析好的 BeanDefinition ，这个过程是通过 BeanDefinitionRegistry 接口来实现的。</li>
+<li><strong>注册 BeanDefinition</strong>：向IoC容器注册在第二步解析好的 BeanDefinition ，这个过程是通过 BeanDefinitionRegistry 接口来实现的。</li>
 </ul>
 <p>了解上述过程后，我们再来看一段代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ClassPathResource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"bean.xml"</span>); <span class="comment">// &lt;1&gt;</span></span><br><span class="line"></span><br><span class="line">DefaultListableBeanFactory factory = <span class="keyword">new</span> DefaultListableBeanFactory(); <span class="comment">// &lt;2&gt;</span></span><br><span class="line"></span><br><span class="line">XmlBeanDefinitionReader reader = <span class="keyword">new</span> XmlBeanDefinitionReader(factory); <span class="comment">// &lt;3&gt;</span></span><br><span class="line"></span><br><span class="line">reader.loadBeanDefinitions(resource); <span class="comment">// &lt;4&gt;</span></span><br></pre></td></tr></table></figure>
@@ -556,6 +557,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/10/28/Spring系列——IoC之解析Bean/" rel="prev" title="Spring系列——IoC之解析Bean">
+                Spring系列——IoC之解析Bean <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -633,7 +638,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1211,5 +1216,5 @@
 
   
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"superSample":2,"width":250,"height":500,"position":"left","hOffset":0,"vOffset":-100},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

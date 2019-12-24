@@ -119,23 +119,20 @@
 
 
 
-<meta name="description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
+<meta name="description" content="[TOC] 解析 &amp;lt;bean&amp;gt; 的过程就是构造 BeanDefinition 对象的过程，&amp;lt;bean&amp;gt; 元素标签拥有的配置属性，BeanDefinition 均提供了相应的属性，与之一一对应。 BeanDefinition 体系 org.springframework.beans.factory.config.BeanDefinition ，是一个接口，它描述了一个 Bea">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring系列——理解IoC">
-<meta property="og:url" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/index.html">
+<meta property="og:title" content="Spring系列——BeanDefinition">
+<meta property="og:url" content="http://yoursite.com/2019/11/19/Spring系列——BeanDefinition/index.html">
 <meta property="og:site_name" content="Zer0ing&#39;s Blog">
-<meta property="og:description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
+<meta property="og:description" content="[TOC] 解析 &amp;lt;bean&amp;gt; 的过程就是构造 BeanDefinition 对象的过程，&amp;lt;bean&amp;gt; 元素标签拥有的配置属性，BeanDefinition 均提供了相应的属性，与之一一对应。 BeanDefinition 体系 org.springframework.beans.factory.config.BeanDefinition ，是一个接口，它描述了一个 Bea">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringResourceLoader类图.png">
-<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringBeanFactory类图.png">
-<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringBeanDefinition类图.png">
-<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringBeanDefinitionReader类图.png">
-<meta property="og:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringApplicationContext类图.png">
-<meta property="og:updated_time" content="2019-11-15T09:36:19.861Z">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/Spring系列——BeanDefinition/SpringBeanDefinition类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/19/Spring系列——BeanDefinition/SpringBeanDefinitionReader类图.png">
+<meta property="og:updated_time" content="2019-11-19T09:06:12.857Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring系列——理解IoC">
-<meta name="twitter:description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
-<meta name="twitter:image" content="http://yoursite.com/2019/10/07/Spring系列——理解IoC/SpringResourceLoader类图.png">
+<meta name="twitter:title" content="Spring系列——BeanDefinition">
+<meta name="twitter:description" content="[TOC] 解析 &amp;lt;bean&amp;gt; 的过程就是构造 BeanDefinition 对象的过程，&amp;lt;bean&amp;gt; 元素标签拥有的配置属性，BeanDefinition 均提供了相应的属性，与之一一对应。 BeanDefinition 体系 org.springframework.beans.factory.config.BeanDefinition ，是一个接口，它描述了一个 Bea">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/19/Spring系列——BeanDefinition/SpringBeanDefinition类图.png">
 
 
 
@@ -165,13 +162,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/10/07/Spring系列——理解IoC/">
+  <link rel="canonical" href="http://yoursite.com/2019/11/19/Spring系列——BeanDefinition/">
 
 
 
 
 
-  <title>Spring系列——理解IoC | Zer0ing's Blog</title>
+  <title>Spring系列——BeanDefinition | Zer0ing's Blog</title>
   
 
 
@@ -322,7 +319,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/Spring系列——理解IoC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/19/Spring系列——BeanDefinition/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zer0ing">
@@ -339,7 +336,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Spring系列——理解IoC</h1>
+          <h1 class="post-title" itemprop="name headline">Spring系列——BeanDefinition</h1>
         
 
         <div class="post-meta">
@@ -351,8 +348,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-07T09:06:24+08:00">
-                2019-10-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-19T10:43:45+08:00">
+                2019-11-19
               </time>
             
 
@@ -389,55 +386,34 @@
       
 
       
-        <h3 id="Spring-IoC概述"><a href="#Spring-IoC概述" class="headerlink" title="Spring IoC概述"></a>Spring IoC概述</h3><p>IoC 全称为 <code>Inversion of Control</code> ，翻译为 “控制反转”。</p>
-<p>如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：</p>
-<ol>
-<li>谁控制谁</li>
-<li>控制什么</li>
-<li>为何是反转</li>
-<li>哪些方面反转</li>
-</ol>
-<p>通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的过程，也就是说一杯橙汁需要自己创造。这种方法就对应在程序代码中直接 <code>new</code> 一个橙汁对象，橙汁全程由自己制作管理。</p>
-<p>然而到了今时今日，由于饮品店的盛行，当想喝橙汁时，第一想法就转换成了找到饮品店的联系方式，通过电话等渠道描述需要、地址、联系方式等，下订单等待，过一会儿就会有人送来橙汁了。在该过程中并没有“主动”去创造橙汁，橙汁是由饮品店创造的，而不是你，然而也完全达到了你的要求，甚至比你创造的要好上那么一些。这个过程饮品店相当于Spring容器，我们获取橙汁对象并不是自己在程序代码中 <code>new</code> 一个对象，而是直接在Spring容器（饮品店）直接获取，饮品店管理橙汁的制作过程。</p>
-<p>现在在看上面那四个问题，答案就显得非常明显了:</p>
-<ol>
-<li><strong>谁控制谁</strong>：在传统的开发模式下，我们都是采用直接 <code>new</code> 一个对象的方式来创建对象，也就是说你依赖的对象直接由你自己控制，有了 IoC 容器后，则直接由 IoC 容器来控制。所以“谁控制谁”，当然是 IoC 容器控制对象。</li>
-<li><strong>控制什么</strong>：控制对象。</li>
-<li><strong>为何是反转</strong>：没有 IoC 的时候我们都是在自己代码中主动去创建被依赖的对象，这是正转。但是有了 IoC 后，所依赖的对象直接由 IoC 容器创建后注入到被注入的对象中，依赖的对象由原来的主动获取变成被动接受，所以是反转。</li>
-<li><strong>哪些方面反转</strong>：所依赖对象的获取被反转。</li>
-</ol>
-<h4 id="注入方式"><a href="#注入方式" class="headerlink" title="注入方式"></a>注入方式</h4><p><code>IoC Service Provider</code>为被注入对象提供被依赖对象也有如下几种方式：构造方法注入、setter方法注入、接口注入。</p>
-<h5 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a>构造方法注入</h5><p>构造器注入，顾名思义就是被注入的对象通过在其构造方法中声明依赖对象的参数列表，让外部知道它需要哪些依赖对象。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Consumer(OrangeJuice orangeJuice) &#123;</span><br><span class="line">    <span class="keyword">this</span>.orangeJuice = orangeJuice;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="setter方法注入"><a href="#setter方法注入" class="headerlink" title="setter方法注入"></a>setter方法注入</h5><p>对于 JavaBean 对象而言，我们一般都是通过 getter 和 setter 方法来访问和设置对象的属性。所以，当前对象只需要为其所依赖的对象提供相对应的 setter 方法，就可以通过该方法将相应的依赖对象设置到被注入对象中。如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OrangeJuice orangeJuice;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrangeJuice</span><span class="params">(OrangeJuice orangeJuice)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orangeJuice = orangeJuice;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>相比于构造器注入，setter 方式注入会显得比较宽松灵活些，它可以在任何时候进行注入（当然是在使用依赖对象之前），</p>
-<h5 id="接口注入"><a href="#接口注入" class="headerlink" title="接口注入"></a>接口注入</h5><p>接口方式注入带有侵入性，因为它需要被依赖的对象实现不必要的接口，一般都不推荐这种方式。</p>
-<h3 id="Spring-体系结构"><a href="#Spring-体系结构" class="headerlink" title="Spring 体系结构"></a>Spring 体系结构</h3><h4 id="Resource-体系"><a href="#Resource-体系" class="headerlink" title="Resource 体系"></a>Resource 体系</h4><p><code>org.springframework.core.io.Resource</code> 是对资源的抽象, 不同实现类代表了对不同资源的访问策略，如 ClassPathResource、RLResource、FileSystemResource 等。</p>
-
-<h4 id="ResourceLoader-体系"><a href="#ResourceLoader-体系" class="headerlink" title="ResourceLoader 体系"></a>ResourceLoader 体系</h4><p>有了资源，就应该有资源加载，Spring 利用<code>org.springframework.core.io.ResourceLoader</code>来进行统一资源加载，类图如下：</p>
-<img src="/2019/10/07/Spring系列——理解IoC/SpringResourceLoader类图.png">
-<h4 id="BeanFactory-体系"><a href="#BeanFactory-体系" class="headerlink" title="BeanFactory 体系"></a>BeanFactory 体系</h4><p><code>org.springframework.beans.factory.BeanFactory</code>，是一个非常纯粹的 bean 容器，它是 IoC 必备的数据结构，其中 BeanDefinition 是它的基本结构。BeanFactory 内部维护着一个BeanDefinition map ，并可根据 BeanDefinition 的描述进行 bean 的创建和管理。</p>
+        <p>[TOC]</p>
+<p>解析 <code>&lt;bean&gt;</code> 的过程就是构造 BeanDefinition 对象的过程，<code>&lt;bean&gt;</code> 元素标签拥有的配置属性，BeanDefinition 均提供了相应的属性，与之一一对应。</p>
+<h3 id="BeanDefinition-体系"><a href="#BeanDefinition-体系" class="headerlink" title="BeanDefinition 体系"></a>BeanDefinition 体系</h3><img src="/2019/11/19/Spring系列——BeanDefinition/SpringBeanDefinition类图.png">
+<p><code>org.springframework.beans.factory.config.BeanDefinition</code> ，是一个接口，它描述了一个 Bean 实例的定义，包括属性值、构造方法值和继承自它的类的更多信息。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">String SCOPE_SINGLETON = ConfigurableBeanFactory.SCOPE_SINGLETON;</span><br><span class="line">String SCOPE_PROTOTYPE = ConfigurableBeanFactory.SCOPE_PROTOTYPE;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> ROLE_APPLICATION = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> ROLE_SUPPORT = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> ROLE_INFRASTRUCTURE = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setParentName</span><span class="params">(@Nullable String parentName)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getParentName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setBeanClassName</span><span class="params">(@Nullable String beanClassName)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getBeanClassName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setScope</span><span class="params">(@Nullable String scope)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getScope</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setLazyInit</span><span class="params">(<span class="keyword">boolean</span> lazyInit)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isLazyInit</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setDependsOn</span><span class="params">(@Nullable String... dependsOn)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line">String[] getDependsOn();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAutowireCandidate</span><span class="params">(<span class="keyword">boolean</span> autowireCandidate)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isAutowireCandidate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setPrimary</span><span class="params">(<span class="keyword">boolean</span> primary)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isPrimary</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setFactoryBeanName</span><span class="params">(@Nullable String factoryBeanName)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getFactoryBeanName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setFactoryMethodName</span><span class="params">(@Nullable String factoryMethodName)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getFactoryMethodName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">ConstructorArgumentValues <span class="title">getConstructorArgumentValues</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">hasConstructorArgumentValues</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> !getConstructorArgumentValues().isEmpty();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">MutablePropertyValues <span class="title">getPropertyValues</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">hasPropertyValues</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> !getPropertyValues().isEmpty();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setInitMethodName</span><span class="params">(@Nullable String initMethodName)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getInitMethodName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setDestroyMethodName</span><span class="params">(@Nullable String destroyMethodName)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getDestroyMethodName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setRole</span><span class="params">(<span class="keyword">int</span> role)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getRole</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setDescription</span><span class="params">(@Nullable String description)</span></span>;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getDescription</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isSingleton</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isPrototype</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isAbstract</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">String <span class="title">getResourceDescription</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">BeanDefinition <span class="title">getOriginatingBeanDefinition</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>我们再来简单了解一下 BeanDefinition 体系中其他接口和类：</p>
 <ul>
-<li>BeanFactory 有三个直接子类 ListableBeanFactory、HierarchicalBeanFactory 和 AutowireCapableBeanFactory 。</li>
-<li>DefaultListableBeanFactory 为默认实现，它实现了所有接口。</li>
+<li><code>org.springframework.cor.AttributeAccessor</code> 接口，定义了与其它对象的（元数据）进行连接和访问的约定，即对属性的修改，包括获取、设置、删除。</li>
 </ul>
-<img src="/2019/10/07/Spring系列——理解IoC/SpringBeanFactory类图.png">
-<h4 id="BeanDefinition-体系"><a href="#BeanDefinition-体系" class="headerlink" title="BeanDefinition 体系"></a>BeanDefinition 体系</h4><p><code>org.springframework.beans.factory.config.BeanDefinition</code> ，用来描述 Spring 中的 Bean 对象。</p>
-<img src="/2019/10/07/Spring系列——理解IoC/SpringBeanDefinition类图.png">
-<h4 id="BeanDefinitionReader-体系"><a href="#BeanDefinitionReader-体系" class="headerlink" title="BeanDefinitionReader 体系"></a>BeanDefinitionReader 体系</h4><p><code>org.springframework.beans.factory.support.BeanDefinitionReader</code> 的作用是读取 Spring 的配置文件的内容，并将其转换成 Ioc 容器内部的数据结构 ：BeanDefinition 。</p>
-<img src="/2019/10/07/Spring系列——理解IoC/SpringBeanDefinitionReader类图.png">
-<h4 id="ApplicationContext-体系"><a href="#ApplicationContext-体系" class="headerlink" title="ApplicationContext 体系"></a>ApplicationContext 体系</h4><p><code>org.springframework.context.ApplicationContext</code>，它叫做应用上下文，是应用层容器。它继承 BeanFactory ，所以它是 BeanFactory 的扩展升级版。由于 ApplicationContext 的结构就决定了它与 BeanFactory 的不同，其主要区别有：</p>
-<ol>
-<li>继承 <code>org.springframework.context.MessageSource</code> 接口，提供国际化的标准访问策略。</li>
-<li>继承 <code>org.springframework.context.ApplicationEventPublisher</code> 接口，提供强大的事件机制。</li>
-<li>扩展 ResourceLoader ，可以用来加载多种 Resource ，可以灵活访问不同的资源。</li>
-<li>对 Web 应用的支持。</li>
-</ol>
-<img src="/2019/10/07/Spring系列——理解IoC/SpringApplicationContext类图.png">
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文主要介绍 IoC 的概念，以及 IoC 的三种注入方式，然后介绍了Spring的六大体系，包括Resource、ResourceLoader、BeanFactory、BeanDefinition、BeanDefinitionReader以及ApplicationContext，后续将详细介绍这些体系的相关源码。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li><a href="http://svip.iocoder.cn/Spring/IoC-intro/" target="_blank" rel="noopener">【死磕 Spring】—— IoC 之深入理解 Spring IoC</a></li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AttributeAccessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">setAttribute</span><span class="params">(String name, @Nullable Object value)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Nullable</span></span><br><span class="line">	<span class="function">Object <span class="title">getAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Nullable</span></span><br><span class="line">	<span class="function">Object <span class="title">removeAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">hasAttribute</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">	String[] attributeNames();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>org.springframework.beans.BeanMetadataElement</code> 接口，Bean 元对象持有的配置元素可以通过 <code>getSource()</code> 方法来获取。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BeanMetadataElement</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Nullable</span></span><br><span class="line">	<span class="function">Object <span class="title">getSource</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ChildBeanDefinition、RootBeanDefinition、GenericBeanDefinition 三者都继承 AbstractBeanDefinition 抽象类，即 AbstractBeanDefinition 是对三个子类的共同的类信息进行抽象。如果配置文件中定义了父 <code>&lt;bean&gt;</code> 和 子 <code>&lt;bean&gt;</code> ，则父 <code>&lt;bean&gt;</code> 用 RootBeanDefinition 表示，子 <code>&lt;bean&gt;</code> 用 ChildBeanDefinition 表示，而没有父 <code>&lt;bean&gt;</code> 的就使用 RootBeanDefinition 表示。 GenericBeanDefinition 为一站式服务类。</li>
+</ul>
+<h3 id="BeanDefinitionReader-体系"><a href="#BeanDefinitionReader-体系" class="headerlink" title="BeanDefinitionReader 体系"></a>BeanDefinitionReader 体系</h3><img src="/2019/11/19/Spring系列——BeanDefinition/SpringBeanDefinitionReader类图.png">
+<h4 id="BeanDefinitionReader-接口"><a href="#BeanDefinitionReader-接口" class="headerlink" title="BeanDefinitionReader 接口"></a>BeanDefinitionReader 接口</h4><p><code>org.springframework.beans.factory.support.BeanDefinitionReader</code>是一个接口，其作用是将资源文件（spring的配置文件）中的信息转换成 BeanDefinition 形式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BeanDefinitionReader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取 BeanDefinitionRegistry 对象，该类的主要作用将 BeanDefinition 注册到BeanDefinition的注册表中</span></span><br><span class="line">	<span class="function">BeanDefinitionRegistry <span class="title">getRegistry</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取 ResourceLoader，主要就是根据路径和ClassLoader获取Resource，之后通过Resource获取输入流读取文件</span></span><br><span class="line">	<span class="meta">@Nullable</span></span><br><span class="line">	<span class="function">ResourceLoader <span class="title">getResourceLoader</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Bean的类加载器</span></span><br><span class="line">	<span class="meta">@Nullable</span></span><br><span class="line">	<span class="function">ClassLoader <span class="title">getBeanClassLoader</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Bean的名字生成器</span></span><br><span class="line">	<span class="function">BeanNameGenerator <span class="title">getBeanNameGenerator</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//加载 BeanDefiniton，从配置文件中通过ResouceLoader和Resource加载资源</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(Resource resource)</span> <span class="keyword">throws</span> BeanDefinitionStoreException</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(Resource... resources)</span> <span class="keyword">throws</span> BeanDefinitionStoreException</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(String location)</span> <span class="keyword">throws</span> BeanDefinitionStoreException</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(String... locations)</span> <span class="keyword">throws</span> BeanDefinitionStoreException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="AbstractBeanDefinitionReader-抽象类"><a href="#AbstractBeanDefinitionReader-抽象类" class="headerlink" title="AbstractBeanDefinitionReader 抽象类"></a>AbstractBeanDefinitionReader 抽象类</h4><ul>
+<li>BeanDefinitionReader 接口有一个抽象类，为 <code>AbstractBeanDefinitionReader</code> 。</li>
+<li>AbstractBeanDefinitionReader 有三种实现类，分别是 <strong>GroovyBeanDefinitionReader</strong>(groovy 文件的读取器)、<strong>PropertiesBeanDefinitionReader</strong>(Properties 文件的读取器)和 <strong>XmlBeanDefinitionReader</strong>(Xml 文件的读取器)。</li>
+<li>AbstractBeanDefinitionReader 抽象类内部有个 <code>BeanDefinitionRegistry</code> 接口类型的属性，BeanDefinitionRegistry 接口持有 BeanDefinition 信息的注册中心，可以注册新的 BeanDefinition，删除旧的 BeanDefinition，获取注册中心的 BeanDefinition 。该接口是 Spring 提供的唯一一个可以操作 BeanDefinition 数据的接口。上述三种实现类内部最终对 bean 的注册都是通过 BeanDefinitionRegistry 完成的，不同点在于它们处理过程不一样，比如对 xml 文件的解析和 properties 文件的解析过程就不同。</li>
+<li><code>loadBeanDefinitions()</code>是该抽象类中最重要的方法。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://fangjian0423.github.io/2017/06/15/spring-bean-register-note/" target="_blank" rel="noopener">Spring类注册笔记</a></li>
 </ol>
 
       
@@ -463,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/04/浅谈SPI机制/" rel="next" title="浅谈SPI机制">
-                <i class="fa fa-chevron-left"></i> 浅谈SPI机制
+              <a href="/2019/10/28/Spring系列——IoC之解析Bean/" rel="next" title="Spring系列——IoC之解析Bean">
+                <i class="fa fa-chevron-left"></i> Spring系列——IoC之解析Bean
               </a>
             
           </div>
@@ -473,8 +449,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/10/13/Spring系列——IoC之Resource和ResourceLoader/" rel="prev" title="Spring系列——IoC之Resource和ResourceLoader">
-                Spring系列——IoC之Resource和ResourceLoader <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/15/Idea常用快捷键/" rel="prev" title="Idea常用快捷键">
+                Idea常用快捷键 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -620,7 +596,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-IoC概述"><span class="nav-text">Spring IoC概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注入方式"><span class="nav-text">注入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#构造方法注入"><span class="nav-text">构造方法注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#setter方法注入"><span class="nav-text">setter方法注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#接口注入"><span class="nav-text">接口注入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-体系结构"><span class="nav-text">Spring 体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Resource-体系"><span class="nav-text">Resource 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ResourceLoader-体系"><span class="nav-text">ResourceLoader 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanFactory-体系"><span class="nav-text">BeanFactory 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanDefinition-体系"><span class="nav-text">BeanDefinition 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanDefinitionReader-体系"><span class="nav-text">BeanDefinitionReader 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ApplicationContext-体系"><span class="nav-text">ApplicationContext 体系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanDefinition-体系"><span class="nav-text">BeanDefinition 体系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanDefinitionReader-体系"><span class="nav-text">BeanDefinitionReader 体系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanDefinitionReader-接口"><span class="nav-text">BeanDefinitionReader 接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AbstractBeanDefinitionReader-抽象类"><span class="nav-text">AbstractBeanDefinitionReader 抽象类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
