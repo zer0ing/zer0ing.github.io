@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lobster Two:300,300italic,400,400italic,700,700italicIosevka:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zer0ing's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Synchronized 用法Synchronized 是 Java 提供的一个并发控制的关键字。主要有两种用法，分别是同步方法和同步代码块。 通过编译可以发现，被 Synchronized 关键字修饰的同步块前后分别生成 monitorenter 和 monitorexit 字节码指令。monitorenter 和 monitorexit 指令是对 lock 和 unlock 指令的高层次实现。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入分析 Synchronized">
+<meta property="og:url" content="http://yoursite.com/2020/03/12/深入分析Synchronized/index.html">
+<meta property="og:site_name" content="Zer0ing&#39;s Blog">
+<meta property="og:description" content="Synchronized 用法Synchronized 是 Java 提供的一个并发控制的关键字。主要有两种用法，分别是同步方法和同步代码块。 通过编译可以发现，被 Synchronized 关键字修饰的同步块前后分别生成 monitorenter 和 monitorexit 字节码指令。monitorenter 和 monitorexit 指令是对 lock 和 unlock 指令的高层次实现。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/OOP结构.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/Java对象模型.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/klass.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/klass链.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/oop-klass-klassKlass关系.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/实例存储结构.jpeg">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/ObjectHead-markword.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/synchronized流程.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/Synchronized_Monitor_enter方法.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/Synchronized_Monitor_exit方法.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/线程状态.png">
+<meta property="og:updated_time" content="2020-06-20T15:16:16.160Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入分析 Synchronized">
+<meta name="twitter:description" content="Synchronized 用法Synchronized 是 Java 提供的一个并发控制的关键字。主要有两种用法，分别是同步方法和同步代码块。 通过编译可以发现，被 Synchronized 关键字修饰的同步块前后分别生成 monitorenter 和 monitorexit 字节码指令。monitorenter 和 monitorexit 指令是对 lock 和 unlock 指令的高层次实现。">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/12/深入分析Synchronized/OOP结构.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/12/深入分析Synchronized/">
+
+
+
+
+
+  <title>深入分析 Synchronized | Zer0ing's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2be418a9d846b398f81631d9692d0c17";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zer0ing's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/深入分析Synchronized/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zer0ing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zer0ing's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入分析 Synchronized</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T09:02:41+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Synchronized-用法"><a href="#Synchronized-用法" class="headerlink" title="Synchronized 用法"></a>Synchronized 用法</h3><p><code>Synchronized</code> 是 Java 提供的一个并发控制的关键字。主要有两种用法，分别是同步方法和同步代码块。</p>
+<p>通过编译可以发现，被 Synchronized 关键字修饰的同步块前后分别生成 <code>monitorenter</code> 和 <code>monitorexit</code> 字节码指令。<code>monitorenter</code> 和 <code>monitorexit</code> 指令是对 <code>lock</code> 和 <code>unlock</code> 指令的高层次实现。</p>
+<p>这两个字节码指令都需要一个 <strong>引用类型的参数</strong> 来指明要锁定和解锁的对象。</p>
+<h4 id="lock-unlock-规则"><a href="#lock-unlock-规则" class="headerlink" title="lock/unlock 规则"></a>lock/unlock 规则</h4><ol>
+<li>一个变量同一时刻只允许一条线程对其进行 lock 操作，但 lock 操作可以被同一个线程执行多次，多次执行 lock 后，只有执行相同次数的 unlock 操作，变量才能被解锁。</li>
+<li>如果对一个变量执行 lock 操作，将会清空工作内存中此变量的值，在执行引擎使用这个变量前，需要重新执行 load 或 assign 操作初始化变量的值；</li>
+<li>如果一个变量没有被 lock 操作锁定，则不允许对其执行 unlock 操作，也不允许 unlock 一个其它线程锁定的变量；</li>
+<li>对一个变量执行 unlock 操作之前，必须先把此变量同步回主内存中，即执行 store 和 write 操作。</li>
+</ol>
+<h4 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h4><p><strong>原子性是指一个操作是不可中断的，要全部执行完成，要不就都不执行</strong>。</p>
+<p>线程是 CPU 调度的基本单位。CPU 有时间片的概念，会根据不同的调度算法进行线程调度。当一个线程获得时间片之后开始执行，在时间片耗尽之后，就会失去 CPU 使用权。所以在多线程场景下，由于时间片在线程间轮换，就会发生原子性问题。原子性问题是由于<strong>时间片切换</strong>导致的。</p>
+<p>通过上述规则 1，即<strong>被 Synchronized 修饰的代码在同一时间只能被一个线程访问，在锁未释放之前，无法被其他线程访问到</strong>。因此，在 Java 中可以使用 Synchronized 来保证方法和代码块内的操作是原子性的。</p>
+<h4 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h4><p><strong>可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值</strong>。</p>
+<p>Java 内存模型规定了所有的变量都存储在主内存中，每条线程还有自己的工作内存，线程的工作内存中保存了该线程中是用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存。不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。所以，就可能出现线程 A 改了某个变量的值，但是线程 B 不可见的情况。可见性问题是由于<strong>工作内存和主内存不一致</strong>导致的。</p>
+<p>通过上述介绍的规则 1、2、4可知，synchronized 关键字锁住的对象，其值是具有可见性的。</p>
+<h4 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h4><p><strong>有序性即程序执行的顺序按照代码的先后顺序执行</strong>。</p>
+<p>除了引入了时间片以外，由于处理器优化和指令重排等，CPU 还可能对输入代码进行乱序执行，比如 load-&gt;add-&gt;save 有可能被优化成 load-&gt;save-&gt;add 。这就是可能存在有序性问题。</p>
+<p>这里需要注意的是，synchronized 是无法禁止指令重排和处理器优化的。也就是说，synchronized 无法避免上述提到的问题。那么，为什么还说 synchronized 也提供了有序性保证呢？<strong>如果在本线程内观察，所有操作都是天然有序的。如果在一个线程中观察另一个线程，所有操作都是无序的。</strong></p>
+<p><code>as-if-serial</code> 语义的意思指：不管怎么重排序（编译器和处理器为了提高并行度），单线程程序的执行结果都不能被改变。编译器和处理器无论如何优化，都必须遵守 <code>as-if-serial</code> 语义。</p>
+<p>再由于上述规则 1、3，同一时间只能被同一线程访问，那么也就是单线程执行的。所以，可以保证其有序性。</p>
+<h3 id="Synchronized的实现原理"><a href="#Synchronized的实现原理" class="headerlink" title="Synchronized的实现原理"></a>Synchronized的实现原理</h3><p>通过反编译可以发现：synchronized 同步代码块是使用 <code>monitorenter</code> 和 <code>monitorexit</code> 指令实现的，同步方法可以看到 <code>flags: ACC_SYNCHRONIZED</code> 字段，JVM 采用 ACC_SYNCHRONIZED 标记符来实现同步。</p>
+<p>无论是 <code>ACC_SYNCHRONIZED</code> 还是 <code>monitorenter</code>、<code>monitorexit</code> 都是基于 Monitor 实现的，在 Java 虚拟机(HotSpot)中，Monitor 是基于 C++ 实现的，由 ObjectMonitor 实现。ObjectMonitor 类中提供了几个方法，如 <code>enter</code>、<code>exit</code>、<code>wait</code>、<code>notify</code>、<code>notifyAll</code>等。Sychronized 加锁的时候，会调用 objectMonitor 的 <code>enter</code> 方法，解锁的时候会调用 <code>exit</code> 方法。</p>
+<h4 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h4><p>方法级的同步是隐式的。同步方法的常量池中会有一个 <code>ACC_SYNCHRONIZED</code> 标志。当某个线程要访问某个方法的时候，会检查是否有 <code>ACC_SYNCHRONIZED</code>，如果有设置，则需要先获得监视器锁，然后开始执行方法，方法执行之后再释放监视器锁。这时如果其他线程来请求执行方法，会因为无法获得监视器锁而被阻断住。值得注意的是，如果在方法执行过程中，<strong>发生了异常，并且方法内部并没有处理该异常，那么在异常被抛到方法外面之前监视器锁会被自动释放</strong>。</p>
+<h4 id="同步代码块"><a href="#同步代码块" class="headerlink" title="同步代码块"></a>同步代码块</h4><p>同步代码块使用 <code>monitorenter</code> 和 <code>monitorexit</code> 两个指令实现。<code>monitorenter</code> 指令插入到同步代码块的开始位置，<code>monitorexit</code> 指令插入到同步代码块的结束位置，JVM 需要保证每一个 <code>monitorenter</code> 都有一个 <code>monitorexit</code> 与之相对应。</p>
+<p>我们通过 <code>javap</code> 命令反编译同步代码后，发现有两个 <code>monitorexit</code> 指令。原因是：为了保证抛异常的情况下也能释放锁，所以 <code>javac</code> 为同步代码块添加了一个隐式的 try-finally，在 finally 中会调用 <code>monitorexit</code> 命令释放锁。</p>
+<p><strong>每个对象维护着一个记录着被锁次数的计数器</strong>。未被锁定的对象的该计数器为0，当一个线程获得锁（执行 <code>monitorenter</code>）后，该计数器自增变为 1 ，当同一个线程再次获得该对象的锁的时候，计数器再次自增。当同一个线程释放锁（执行 <code>monitorexit</code> 指令）的时候，计数器再自减。当计数器为 0 的时候。锁将被释放，其他线程便可以获得锁。</p>
+<h3 id="Java-对象模型"><a href="#Java-对象模型" class="headerlink" title="Java 对象模型"></a>Java 对象模型</h3><p>Java 对象保存在堆内存中。在内存中，一个 Java 对象包含三部分：对象头、实例数据和对齐填充。其中对象头是一个很关键的部分，因为对象头中包含锁状态标志、线程持有的锁等标志。</p>
+<h4 id="OOP-Klass-Model"><a href="#OOP-Klass-Model" class="headerlink" title="OOP-Klass Model"></a>OOP-Klass Model</h4><p>HotSpot 是基于 C++ 实现，C++ 具备面向对象基本特征的，所以 Java 中的对象表示，最简单的做法是为每个 Java 类生成一个 C++ 类与之对应。</p>
+<p>HotSpot JVM 没有根据 Java 实例对象直接通过虚拟机映射到新建的 C++ 对象，而是设计了一个 <strong>OOP-Klass Model</strong>。OOP 指的是 Ordinary Object Pointer（普通对象指针），用来<strong>表示对象的实例信息</strong>；而 Klass 则包含元数据和方法信息，用来<strong>描述 Java 类</strong>。</p>
+<p>为什么 HotSpot 要设计 OOP-Klass Model 呢？答案是：HotSopt JVM 的设计者不想让每个对象中都含有一个 virtual table（虚函数表），所以就把对象模型拆成 Klass 和 OOP，其中 OOP 中不含有任何虚函数，而 Klass 就含有虚函数表。</p>
+<blockquote>
+<p>为了实现 C++ 的多态，C++ 使用了一种动态绑定的技术，这个技术的核心是虚函数表。虚函数表属于类，然后类的所有对象通过虚函数表指针共享类的虚函数表。虚函数表的作用是当使用父类指针来操作子类对象时，虚函数表可以指明实际所应该调用的函数。</p>
+</blockquote>
+<h4 id="OOP-体系"><a href="#OOP-体系" class="headerlink" title="OOP 体系"></a>OOP 体系</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义了oops共同基类</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">oopDesc</span>*                            <span class="title">oop</span>;</span></span><br><span class="line"><span class="comment">//表示一个Java类型实例</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">instanceOopDesc</span>*            <span class="title">instanceOop</span>;</span></span><br><span class="line"><span class="comment">//表示一个Java方法</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">methodOopDesc</span>*                    <span class="title">methodOop</span>;</span></span><br><span class="line"><span class="comment">//表示一个Java方法中的不变信息</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">constMethodOopDesc</span>*            <span class="title">constMethodOop</span>;</span></span><br><span class="line"><span class="comment">//记录性能信息的数据结构</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">methodDataOopDesc</span>*            <span class="title">methodDataOop</span>;</span></span><br><span class="line"><span class="comment">//定义了数组OOPS的抽象基类</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">arrayOopDesc</span>*                    <span class="title">arrayOop</span>;</span></span><br><span class="line"><span class="comment">//表示持有一个OOPS数组</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">objArrayOopDesc</span>*            <span class="title">objArrayOop</span>;</span></span><br><span class="line"><span class="comment">//表示容纳基本类型的数组</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">typeArrayOopDesc</span>*            <span class="title">typeArrayOop</span>;</span></span><br><span class="line"><span class="comment">//表示在Class文件中描述的常量池</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">constantPoolOopDesc</span>*            <span class="title">constantPoolOop</span>;</span></span><br><span class="line"><span class="comment">//常量池缓存</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">constantPoolCacheOopDesc</span>*   <span class="title">constantPoolCacheOop</span>;</span></span><br><span class="line"><span class="comment">//描述一个与Java类对等的C++类</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">klassOopDesc</span>*                    <span class="title">klassOop</span>;</span></span><br><span class="line"><span class="comment">//表示对象头</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span>   <span class="title">markOopDesc</span>*                    <span class="title">markOop</span>;</span></span><br></pre></td></tr></table></figure>
+<p>上面列出的是整个 OOP 模块的组成结构，其中包含多个子模块。每一个子模块对应一个类型，每一个类型的 OOP 都代表一个在 JVM 内部使用的特定对象的类型。</p>
+<p>第一个变量 oop 的类型是 oppDesc ，其是OOPS 类的共同基类型。除此之外，还有很多 instanceOopDesc、arrayOopDesc 等类型的实例，都是 oopDesc 的子类。</p>
+<img src="/2020/03/12/深入分析Synchronized/OOP结构.png">
+<p>这些模块在 JVM 内部有着不同的用途，例如，<code>instanceOopDesc</code> 表示类实例，<code>arrayOopDesc</code> 表示数组。也就是说，当我们使用 <code>new</code> 创建一个 Java 对象实例的时候，JVM 会创建一个 <code>instanceOopDesc</code> 对象来表示这个 Java 对象。同理，当我们使用 <code>new</code> 创建一个 Java 数组实例的时候，JVM 会创建一个 <code>arrayOopDesc</code> 对象来表示这个数组对象。</p>
+<h5 id="oopDesc"><a href="#oopDesc" class="headerlink" title="oopDesc"></a>oopDesc</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">oopDesc</span> &#123;</span></span><br><span class="line">  <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">VMStructs</span>;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">      <span class="keyword">volatile</span> markOop  _mark;</span><br><span class="line">      <span class="keyword">union</span> _metadata &#123;</span><br><span class="line">        wideKlassOop    _klass;</span><br><span class="line">        narrowOop       _compressed_klass;</span><br><span class="line">      &#125; _metadata;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">      <span class="comment">// field addresses in oop</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span>*     <span class="title">field_base</span><span class="params">(<span class="keyword">int</span> offset)</span>        <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">      <span class="function">jbyte*    <span class="title">byte_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span>   <span class="keyword">const</span></span>;</span><br><span class="line">      <span class="function">jchar*    <span class="title">char_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span>   <span class="keyword">const</span></span>;</span><br><span class="line">      <span class="function">jboolean* <span class="title">bool_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span>   <span class="keyword">const</span></span>;</span><br><span class="line">      <span class="function">jint*     <span class="title">int_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span>    <span class="keyword">const</span></span>;</span><br><span class="line">      <span class="function">jshort*   <span class="title">short_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span>  <span class="keyword">const</span></span>;</span><br><span class="line">      <span class="function">jlong*    <span class="title">long_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span>   <span class="keyword">const</span></span>;</span><br><span class="line">      <span class="function">jfloat*   <span class="title">float_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span>  <span class="keyword">const</span></span>;</span><br><span class="line">      <span class="function">jdouble*  <span class="title">double_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span> <span class="keyword">const</span></span>;</span><br><span class="line">      <span class="function">address*  <span class="title">address_field_addr</span><span class="params">(<span class="keyword">int</span> offset)</span> <span class="keyword">const</span></span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>在虚拟机内部，一个 Java 对象对应一个 <code>instanceOopDesc</code> 的对象。再来看一下 instanceOopDesc 源码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">instanceOopDesc</span> :</span> <span class="keyword">public</span> oopDesc &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过上面的源码，可知 HotSpot 虚拟机中，对象在内存中存储的布局可以分为三块区域：<strong>对象头</strong>、<strong>实例数据</strong>和<strong>对齐填充</strong>。其中<strong>对象头包含了两部分内容：<code>_mark</code> 和 <code>_metadata</code></strong> ，而实例数据则保存在 oopDesc 中定义的各种 <code>field</code> 中。</p>
+<img src="/2020/03/12/深入分析Synchronized/Java对象模型.jpg">
+<ul>
+<li><strong>_mark</strong>：<code>instanceOopDesc</code> 中的 <code>_mark</code> 成员，允许压缩。它用于存储对象的运行时记录信息，如哈希值、GC 分代年龄(Age)、锁状态标志（偏向锁、轻量级锁、重量级锁）、线程持有的锁、偏向线程 ID、偏向时间戳等。</li>
+<li><strong>_metadata</strong>：<code>_metadata</code> 是一个共用体，其中 <code>_klass</code> 是普通指针，<code>_compressed_klass</code>  是压缩类指针。这两个指针都指向 <code>instanceKlass</code> 对象，它用来描述对象的具体类型。</li>
+<li><strong>实例数据</strong>：实例数据就是在程序代码中所定义的各种类型的字段，包括从父类继承的，这部分的存储顺序会受到虚拟机分配策略和字段在源码中定义顺序的影响。</li>
+<li><strong>对齐填充</strong>：由于 HotSpot 的自动内存管理要求对象的起始地址必须是 8 字节的整数倍，即对象的大小必须是 8 字节的整数倍，对象头的数据正好是 8 的整数倍，所以当实例数据不够 8 字节整数倍时，需要通过对齐填充进行补全。</li>
+<li>数组长度：只有数组对象包含此部分。</li>
+</ul>
+<h4 id="Klass体系"><a href="#Klass体系" class="headerlink" title="Klass体系"></a>Klass体系</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//klassOop的一部分，用来描述语言层的类型</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>  <span class="title">Klass</span>;</span></span><br><span class="line"><span class="comment">//在虚拟机层面描述一个Java类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>   <span class="title">instanceKlass</span>;</span></span><br><span class="line"><span class="comment">//专有instantKlass，表示java.lang.Class的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>     <span class="title">instanceMirrorKlass</span>;</span></span><br><span class="line"><span class="comment">//专有instantKlass，表示java.lang.ref.Reference的子类的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>     <span class="title">instanceRefKlass</span>;</span></span><br><span class="line"><span class="comment">//表示methodOop的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>   <span class="title">methodKlass</span>;</span></span><br><span class="line"><span class="comment">//表示constMethodOop的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>   <span class="title">constMethodKlass</span>;</span></span><br><span class="line"><span class="comment">//表示methodDataOop的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>   <span class="title">methodDataKlass</span>;</span></span><br><span class="line"><span class="comment">//最为klass链的端点，klassKlass的Klass就是它自身</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>   <span class="title">klassKlass</span>;</span></span><br><span class="line"><span class="comment">//表示instanceKlass的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>     <span class="title">instanceKlassKlass</span>;</span></span><br><span class="line"><span class="comment">//表示arrayKlass的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>     <span class="title">arrayKlassKlass</span>;</span></span><br><span class="line"><span class="comment">//表示objArrayKlass的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>       <span class="title">objArrayKlassKlass</span>;</span></span><br><span class="line"><span class="comment">//表示typeArrayKlass的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>       <span class="title">typeArrayKlassKlass</span>;</span></span><br><span class="line"><span class="comment">//表示array类型的抽象基类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>   <span class="title">arrayKlass</span>;</span></span><br><span class="line"><span class="comment">//表示objArrayOop的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>     <span class="title">objArrayKlass</span>;</span></span><br><span class="line"><span class="comment">//表示typeArrayOop的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>     <span class="title">typeArrayKlass</span>;</span></span><br><span class="line"><span class="comment">//表示constantPoolOop的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>   <span class="title">constantPoolKlass</span>;</span></span><br><span class="line"><span class="comment">//表示constantPoolCacheOop的Klass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span>   <span class="title">constantPoolCacheKlass</span>;</span></span><br></pre></td></tr></table></figure>
+<p>和 <code>oopDesc</code> 是其他 OOP 类型的父类一样，Klass 类是其他 Klass 类型的父类。</p>
+<img src="/2020/03/12/深入分析Synchronized/klass.png">
+<p>Klass 向 JVM 提供两个功能：</p>
+<ul>
+<li>实现语言层面的 Java 类（在 Klass 基类中已经实现）;</li>
+<li>实现 Java 对象的分发功能（由 Klass 的子类提供虚函数实现）。</li>
+</ul>
+<p>总之，HotSopt JVM 的设计者把对象一拆为二，分为 Klass 和 OOP，其中 OOP 的职能主要在于<strong>表示对象的实例数据</strong>，所以其中不含有任何虚函数。而 Klass 为了<strong>实现虚函数多态</strong>，所以提供了虚函数表。（这样避免了每个对象中都含有一个虚函数表）</p>
+<h4 id="instanceKlass"><a href="#instanceKlass" class="headerlink" title="instanceKlass"></a>instanceKlass</h4><p>JVM 在运行时，需要一种用来标识 Java 内部类型的机制。在 HotSpot 中的解决方案是：<strong>为每一个已加载的 Java 类创建一个 <code>instanceKlass</code> 对象，用来在 JVM 层面表示 Java 类</strong>。<code>instanceKlass</code> 内部结构如下，从中可以看出，一个类含有的东西，其内部都包含有对应内容。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类拥有的方法列表</span></span><br><span class="line"> objArrayOop     _methods;</span><br><span class="line"> <span class="comment">//描述方法顺序</span></span><br><span class="line"> typeArrayOop    _method_ordering;</span><br><span class="line"> <span class="comment">//实现的接口</span></span><br><span class="line"> objArrayOop     _local_interfaces;</span><br><span class="line"> <span class="comment">//继承的接口</span></span><br><span class="line"> objArrayOop     _transitive_interfaces;</span><br><span class="line"> <span class="comment">//域</span></span><br><span class="line"> typeArrayOop    _fields;</span><br><span class="line"> <span class="comment">//常量</span></span><br><span class="line"> constantPoolOop _constants;</span><br><span class="line"> <span class="comment">//类加载器</span></span><br><span class="line"> oop             _class_loader;</span><br><span class="line"> <span class="comment">//protected域</span></span><br><span class="line"> oop             _protection_domain;</span><br><span class="line">     ....</span><br></pre></td></tr></table></figure></p>
+<p>（<strong>重点理解</strong>）在 JVM 中，对象在内存中的基本存在形式就是 Oop。那么，对象所属的类，在 JVM 中也是一种对象，因此它们实际上也会被组织成一种 Oop，即 klassOop。同样的，对于 <code>klassOop</code>，也有对应的一个 klass 来描述，它就是 <code>klassKlass</code>，也是 klass 的一个子类。<code>klassKlass</code> 作为 oop 的 klass 链的端点。关于对象和数组的 klass 链大致如下图：</p>
+<img src="/2020/03/12/深入分析Synchronized/klass链.jpg">
+<p>在这种设计下，JVM 对内存的分配和回收，都可以采用统一的方式来管理。oop-klass-klassKlass 关系如图：</p>
+<img src="/2020/03/12/深入分析Synchronized/oop-klass-klassKlass关系.png">
+<h4 id="内存存储"><a href="#内存存储" class="headerlink" title="内存存储"></a>内存存储</h4><blockquote>
+<p>元数据—— <code>instanceKlass</code> 对象会存在元空间（方法区），而对象实例—— <code>instanceOopDesc</code> 会存在 Java 堆，Java 虚拟机栈中会存有这个对象实例的引用。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Model</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> b;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Model</span><span class="params">(<span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.b = b;</span><br><span class="line">    &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c = <span class="number">10</span>;</span><br><span class="line">    Model modelA = <span class="keyword">new</span> Model(<span class="number">2</span>);</span><br><span class="line">    Model modelB = <span class="keyword">new</span> Model(<span class="number">3</span>);&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2020/03/12/深入分析Synchronized/实例存储结构.jpeg">
+<p>从上图中可以看到，在方法区的 <code>instantKlass</code> 中有一个 <code>int a=1</code> 的数据存储。在堆内存中的两个对象的oop中，分别维护着 <code>int b=3,int b=2</code> 的实例数据。和 <code>oopDesc</code> 一样，instantKlass也维护着一些 <code>fields</code>，用来保存类中定义的类数据，比如<code>int a=1</code>。</p>
+<p>问题：JVM 中，InstanceKlass、java.lang.Class 的关系？<br>ClassFileParser 将 class 文件在 runtime 解析成一个个 InstanceKlass 对象，这个对象是静态字节码文件在运行时 Metaspace 空间的一个映射。Java支持反射，为了能在 Java 层实现对定义类型的解构，JVM 实现了 InstanceKlass 的一个 java mirror 的概念—— java.lang.Class 对象。<br>InstanceKlass类继承自Klass类，在Klass类中有一个成员变量，并且提供了相应的Setter/Getter函数实现：</p>
+<p>在 java.lang.Class 类中，也提供了 Class 对象与 Klass 对象的转化函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> Klass* <span class="title">as_Klass</span><span class="params">(oop java_class)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">set_klass</span><span class="params">(oop java_class, Klass* klass)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>Class 类所提供的反射机制，最终都是通过 JNI 接口，调用相应的 native 方法，然后通过 as_Klass 函数转换成 InstanceKlass 对象，得到定义类型的元数据信息。</p>
+<h4 id="JDK-1-8-变化部分"><a href="#JDK-1-8-变化部分" class="headerlink" title="JDK 1.8 变化部分"></a>JDK 1.8 变化部分</h4><p>注意，由于 Java 8 引入了元空间（Metaspace），OpenJDK 1.8 里对象模型的实现与 1.7 有很大的不同。原先存于永久代的类信息移至元空间，因此它们的 C++ 类型都继承于 <code>MetaspaceObj</code> 类(定义见 <code>vm/memory/allocation.hpp</code>)，表示元空间的数据。</p>
+<p>OOP 体系也发生变化，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span> <span class="title">oopDesc</span>* <span class="title">oop</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span> <span class="title">instanceOopDesc</span>* <span class="title">instanceOop</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span> <span class="title">arrayOopDesc</span>* <span class="title">arrayOop</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span> <span class="title">objArrayOopDesc</span>* <span class="title">objArrayOop</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">class</span> <span class="title">typeArrayOopDesc</span>* <span class="title">typeArrayOop</span>;</span></span><br></pre></td></tr></table></figure>
+<p> MetaspaceObj 体系如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The metadata hierarchy is separate from the oop hierarchy</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// class MetaspaceObj</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstMethod</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstantPoolCache</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MethodData</span>;</span></span><br><span class="line"><span class="comment">// class Metadata</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Method</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstantPool</span>;</span></span><br><span class="line"><span class="comment">// class CHeapObj</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompiledICHolder</span>;</span></span><br></pre></td></tr></table></figure>
+<p>Klass 体系：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The klass hierarchy is separate from the oop hierarchy.</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Klass</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InstanceKlass</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InstanceMirrorKlass</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InstanceClassLoaderKlass</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InstanceRefKlass</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArrayKlass</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ObjArrayKlass</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TypeArrayKlass</span>;</span></span><br></pre></td></tr></table></figure></p>
+<p>注意 <strong>Klass 代表元数据，继承自 Metadata 类</strong>，因此像 Method、ConstantPool 都会以成员变量（或指针）的形式存在于 Klass 体系中。<br>以下是 JDK 1.7 中的类在 JDK 1.8 中的存在形式：</p>
+<ul>
+<li>klassOop -&gt; Klass*</li>
+<li>klassKlass 不再需要</li>
+<li>methodOop -&gt; Method*</li>
+<li>methodDataOop -&gt; MethodData*</li>
+<li>constMethodOop -&gt; ConstMethod*</li>
+<li>constantPoolOop -&gt; ConstantPool*</li>
+<li>constantPoolCacheOop -&gt; ConstantPoolCache*</li>
+</ul>
+<p>其中，Klass 对象的继承关系：xxxKlass &lt;:&lt; Klass &lt;:&lt; Metadata &lt;:&lt; MetaspaceObj。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>执行 <code>new A()</code> 的时候，JVM native 层里会发生什么。首先，如果这个类没有被加载过，JVM 就会进行类的加载，并在 JVM 内部创建一个 <code>instanceKlass</code> 对象表示这个类的运行时元数据（相当于 Java 层的 Class 对象）。到初始化的时候（执行 <code>invokespecial A::&lt;init&gt;</code>），JVM 就会创建一个 <code>instanceOopDesc</code> 对象表示这个对象的实例，然后进行 Mark Word 的填充，将元数据指针指向 Klass 对象，并填充实例变量。</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ol>
+<li><a href="https://www.hollischuang.com/archives/1910" target="_blank" rel="noopener">深入理解多线程（二）—— Java的对象模型</a></li>
+<li><a href="https://www.sczyh30.com/posts/Java/jvm-klass-oop/" target="_blank" rel="noopener">深入探究 JVM | klass-oop对象模型研究</a></li>
+</ol>
+<h3 id="对象头"><a href="#对象头" class="headerlink" title="对象头"></a>对象头</h3><p>oopDesc 中的 <code>_mark</code> 和 <code>_metadata</code> 其实就是对象头的定义。<code>-metadata</code>前面已经做过介绍，下面重点介绍 <code>_mark</code>。</p>
+<p>对象头信息是与对象自身定义的数据无关的额外存储成本，考虑到虚拟机的空间效率，Mark Word 被设计成一个非固定的数据结构以便在极小的空间内存储尽量多的信息，它会根据对象的状态复用自己的存储空间。</p>
+<p>对 Mark Word 的设计方式上，非常像网络协议报文头：将 Mark Word 划分为多个比特位区间，并在不同的对象状态下赋予比特位不同的含义。下图描述了在 32 位虚拟机上，在对象不同状态时 Mark Word 各个比特位区间的含义。</p>
+<img src="/2020/03/12/深入分析Synchronized/ObjectHead-markword.png">
+<p>从上图中可以看出，对象的状态一共有五种，分别是<strong>无锁态</strong>、<strong>轻量级锁</strong>、<strong>重量级锁</strong>、<strong>GC标记</strong>和<strong>偏向锁</strong>。在 32 位的虚拟机中有 2 个Bits是用来存储锁的标记为的，但是我们都知道，2 个 bits 最多只能表示四种状态：00、01、10、11，那么第五种状态如何表示呢 ，就要额外依赖 1Bit 的空间，使用 0 和 1 来区分。</p>
+<p>在 32 位的 HotSpot 虚拟机 中对象未被锁定的状态下，Mark Word 的 32 个 Bits 空间中的 25Bits 用于存储对象哈希码(HashCode)，4Bits 用于存储对象分代年龄，2Bits 用于存储锁标志位，1Bit 固定为0，表示非偏向锁。</p>
+<h3 id="Moniter"><a href="#Moniter" class="headerlink" title="Moniter"></a>Moniter</h3><p>Monitor 是一种同步工具，也可以说是一种同步机制，主要特点是：</p>
+<p>同一个时刻，只有一个 进程/线程 能进入 Monitor 中定义的临界区，这使得 Monitor 能够达到互斥的效果。但仅仅有互斥的作用是不够的，无法进入 Monitor 临界区的 进程/线程应该被阻塞，并且在必要的时候会被唤醒。显然，Monitor 作为一个同步工具，也应该提供这样的管理 进程/线程 状态的机制。</p>
+<p>在 Java 中每个对象都有一个 Monitor 对象与之对应，在重量级锁的状态下，对象的 mark word 存放的是一个指针，指向了与之对应的 monitor 对象。这个 Monitor 对象就是实现重量锁的关键。注意这里说的是实现重量锁的关键，所以偏向锁、轻量锁在实现上和 Monitor 是没有关系的。</p>
+<p>无论是 <code>ACC_SYNCHRONIZED</code> 还是 <code>monitorenter</code>、<code>monitorexit</code> 都是基于 Monitor 机制实现的，在 Java 虚拟机（HotSpot）中，Monitor 机制是基于 C++ 的，由 ObjectMonitor 类具体实现。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ObjectMonitor() &#123;</span><br><span class="line">  _header       = <span class="literal">NULL</span>;</span><br><span class="line">  _count        = <span class="number">0</span>;</span><br><span class="line">  _waiters      = <span class="number">0</span>,</span><br><span class="line">  _recursions   = <span class="number">0</span>;</span><br><span class="line">  _object       = <span class="literal">NULL</span>;</span><br><span class="line">  _owner        = <span class="literal">NULL</span>;</span><br><span class="line">  _WaitSet      = <span class="literal">NULL</span>;</span><br><span class="line">  _WaitSetLock  = <span class="number">0</span> ;</span><br><span class="line">  _Responsible  = <span class="literal">NULL</span> ;</span><br><span class="line">  _succ         = <span class="literal">NULL</span> ;</span><br><span class="line">  _cxq          = <span class="literal">NULL</span> ;</span><br><span class="line">  FreeNext      = <span class="literal">NULL</span> ;</span><br><span class="line">  _EntryList    = <span class="literal">NULL</span> ;</span><br><span class="line">  _SpinFreq     = <span class="number">0</span> ;</span><br><span class="line">  _SpinClock    = <span class="number">0</span> ;</span><br><span class="line">  OwnerIsThread = <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ObjectMonitor</code> 中有几个关键属性：</p>
+<ul>
+<li>_owner：指向<strong>持有 ObjectMonitor 对象的线程</strong>。初始时为 <code>NULL</code>，当有线程占有该 monitor 时，<code>_owner</code> 标记为该线程的唯一标识。当线程释放 monitor 时，<code>_owner</code> 又恢复为 <code>NULL</code>。<code>_owner</code> 是一个临界资源，JVM 是通过 <strong>CAS</strong> 操作来保证其线程安全的。</li>
+<li>_cxq：ContentionList，所有请求锁的线程首先会被放在这个集合中。<code>_cxq</code> 是一个临界资源，JVM 通过 <strong>CAS</strong> 来修改 <code>_cxq</code> 。修改前 <code>_cxq</code> 的旧值填入了 node 的 next 字段，<code>_cxq</code> 指向新值（新线程），因此 <code>_cxq</code> 是一个<strong>后进先出的 stack（栈）</strong>。</li>
+<li>_WaitSet：<strong>存放调用 <code>wait()</code> 方法的线程队列</strong>；</li>
+<li>_EntryList：存放处于等待锁 block 状态的<strong>线程队列</strong>，<code>_cxq</code> 队列中有资格成为候选资源的线程会被移动到该队列中；</li>
+<li>_recursions：锁的重入次数；</li>
+<li>_count：用来记录该线程获取锁的次数。</li>
+</ul>
+<p>其中 cxq、EntryList、WaitSet 都是由 ObjectWaiter 组成的链表结构。</p>
+<img src="/2020/03/12/深入分析Synchronized/synchronized流程.png">
+<ol>
+<li><p>假设有 A、B 两个线程竞争被 synchronized 锁住的资源，A 线程抢先拿到了锁。拿到锁的步骤为：</p>
+<ul>
+<li>将 MonitorObject 中的 _owner 设置成 A线程；</li>
+<li>将 mark word 设置为 Monitor 对象地址，锁标志位改为 10；</li>
+<li>将 B 线程阻塞放到 ContentionList 队列；</li>
+</ul>
+</li>
+<li><p>JVM 每次从 Waiting Queue 的尾部取出一个线程放到 OnDeck 作为候选者，但是如果并发比较高，Waiting Queue 会被大量线程执行 CAS 操作，为了降低对尾部元素的竞争，将Waiting Queue 拆分成 ContentionList 和 EntryList 二个队列，JVM 将一部分线程移到 EntryList 作为准备进 OnDeck 的预备线程。</p>
+<ul>
+<li>所有请求锁的线程首先被放在 ContentionList 队列中；</li>
+<li>ContentionList 中那些有资格成为候选资源的线程被移动到 Entry List 中；</li>
+<li>任意时刻，最多只有一个线程正在竞争锁资源，该线程被成为 OnDeck；</li>
+<li>当前已经获取到锁资源的线程被称为 owner；</li>
+<li>处于 ContentionList、EntryList、WaitSet 中的线程都处于阻塞状态，该阻塞是由操作系统来完成的（Linux 下采用 pthread_mutex_lock 内核函数实现的）。</li>
+</ul>
+</li>
+<li><p>作为 owner 的 A 线程执行过程中，可能调用 wait() 释放锁，这个时候 A 线程进入 Wait Set , 等待被唤醒。</p>
+</li>
+</ol>
+<p>当线程释放锁时，会从 cxq 或 EntryList 中挑选一个线程唤醒，被选中的线程叫做 Heir presumptive，即图中的 Ready Thread，该线程被唤醒后会尝试获得锁，但 synchronized 是非公平的，所以该线程不一定能获得锁。</p>
+<p>如果线程获得锁后调用 Object.wait 方法，则会将线程加入到 WaitSet 中，当被 Object.notify 唤醒后，会将线程从 WaitSet 移动到 cxq 或 EntryList 中。需要注意的是，当调用一个锁对象的 wait 或 notify 方法时，如当前锁的状态是偏向锁或轻量级锁则会先升级成重量级锁。</p>
+<h4 id="ObjectMonitor-类的重要方法"><a href="#ObjectMonitor-类的重要方法" class="headerlink" title="ObjectMonitor 类的重要方法"></a>ObjectMonitor 类的重要方法</h4><p>synchronized 关键字在使用的时候，往往需要指定一个对象与之关联，例如 synchronized(this)，或者 synchronized(ANOTHER_LOCK)，synchronized 如果修饰的是实例方法，那么其关联的对象实际上是 this，如果修饰的是类方法，那么其关联的对象是 this.class。总之，synchronzied 需要关联一个对象，而这个对象就是 ObjectMonitor。</p>
+<p>Java 语言中的 java.lang.Object 类，便是满足这个要求的对象，任何一个 Java 对象都可以作为 monitor 机制的 ObjectMonitor。</p>
+<h5 id="enter"><a href="#enter" class="headerlink" title="enter"></a>enter</h5><img src="/2020/03/12/深入分析Synchronized/Synchronized_Monitor_enter方法.png">
+<h5 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h5><img src="/2020/03/12/深入分析Synchronized/Synchronized_Monitor_exit方法.png">
+<h5 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h5><h5 id="notify"><a href="#notify" class="headerlink" title="notify"></a>notify</h5><h5 id="notifyAll"><a href="#notifyAll" class="headerlink" title="notifyAll"></a>notifyAll</h5><h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>通过这篇文章我们知道了 sychronized 加锁的时候，会调用 objectMonitor 的 <code>enter</code> 方法，解锁的时候会调用 <code>exit</code> 方法。事实上，只有在 JDK1.6 之前，synchronized 的实现才会直接调用 ObjectMonitor 的 <code>enter</code> 和 <code>exit</code>，这种锁被称之为<strong>重量级锁</strong>。为什么说这种方式操作锁很重呢？</p>
+<ul>
+<li>Java的线程是映射到操作系统原生线程之上的，如果要阻塞或唤醒一个线程就需要操作系统的帮忙，这就要从用户态转换到核心态，因此状态转换需要花费很多的处理器时间，对于代码简单的同步块（如被 synchronized 修饰的<code>get</code> 或 <code>set</code> 方法）状态转换消耗的时间有可能比用户代码执行的时间还要长，所以说 synchronized 是 Java 语言中一个重量级锁。</li>
+</ul>
+<p>所以，在 JDK1.6 中出现对锁进行了很多的优化，进而出现轻量级锁，偏向锁，锁消除，适应性自旋锁，锁粗化(自旋锁在 JDK1.4 就有，只不过默认的是关闭的，JDK1.6 是默认开启的)，这些操作都是为了在线程之间更高效的共享数据 ，解决竞争问题。</p>
+<h3 id="Java虚拟机的锁优化技术"><a href="#Java虚拟机的锁优化技术" class="headerlink" title="Java虚拟机的锁优化技术"></a>Java虚拟机的锁优化技术</h3><h4 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h4><img src="/2020/03/12/深入分析Synchronized/线程状态.png">
+<h4 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h4><p>自旋锁在 JDK 1.4 中已经引入，在 JDK 1.6 中默认开启。</p>
+<p><strong>自旋锁指线程不放弃处理器的执行时间，等待持有锁的线程释放锁</strong>。</p>
+<p>自旋锁和阻塞锁最大的区别就是，<strong>要不要放弃处理器的执行时间</strong>。对于阻塞锁和自旋锁来说，都是要等待获得共享资源。但是阻塞锁是放弃了 CPU 时间，进入了等待区，等待被唤醒。而自旋锁是一直“自旋”在那里，时刻的检查共享资源是否可以被访问。<br>由于自旋锁只是将当前线程不停地执行循环体，不进行线程状态的改变，所以响应速度更快。但当线程数不停增加时，性能下降明显，因为每个线程都需要执行，占用 CPU 时间。如果线程竞争不激烈，并且保持锁的时间短，适合使用自旋锁。</p>
+<h4 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h4><p>锁消除，是 JIT 编译器对内部锁的具体实现所做的一种优化。在动态编译同步块的时候，JIT 编译器可以借助一种被称为逃逸分析（Escape Analysis）的技术来判断同步块所使用的锁对象是否只能够被一个线程访问而没有被发布到其他线程。如果同步块所使用的锁对象通过这种分析被证实只能够被一个线程访问，那么 JIT 编译器在编译这个同步块的时候就会取消对这部分代码的同步。</p>
+<h4 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h4><p>在代码中，需要加锁的时候，我们提倡尽量减小锁的粒度，这样可以避免不必要的阻塞。但是，如果在一段代码中连续的对同一个对象反复加锁解锁，其实是相对耗费资源的，这种情况可以适当放宽加锁的范围，减少性能消耗。<br>当 JIT 发现一系列连续的操作都对同一个对象反复加锁和解锁，甚至加锁操作出现在循环体中的时候，会将加锁同步的范围扩散（粗化）到整个操作序列的外部。</p>
+<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>大多数情况下锁不仅不存在多线程竞争，而且总是由同一线程多次获得。偏向锁的目的是<strong>在某个线程获得锁之后，消除这个线程锁重入（CAS）的开销，看起来让这个线程得到了偏护</strong>。引入偏向锁是为了在多线程竞争的情况下尽量减少不必要的轻量级锁执行，因为轻量级锁的获取及释放依赖多次 CAS 原子指令，而偏向锁只需要在置换 ThreadID 的时候依赖一次 CAS 原子指令（由于一旦出现多线程竞争的情况就必须撤销偏向锁，所以偏向锁的撤销操作的性能损耗必须小于节省下来的 CAS 原子指令的性能消耗）。上面说过，轻<br>量级锁是为了在线程交替执行同步块时提高性能，而偏向锁则是在只有一个线程执行同步块时进一步提高性能。</p>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>“轻量级”是相对于使用操作系统互斥量来实现的传统锁而言的。但是，首先需要强调一点的是，轻量级锁并不是用来代替重量级锁的，其目的是在没有多线程竞争的前提下，减少传统的重量级锁使用产生的性能消耗。在解释轻量级锁的执行过程之前，先明白一点，轻量级锁所适应的场景是线程交替执行同步块的情况，如果存在同一时间访问同一锁的情况，就会导致轻量级锁膨胀为重量级锁。</p>
+<h3 id="Synchronized和ReentrantLock的区别"><a href="#Synchronized和ReentrantLock的区别" class="headerlink" title="Synchronized和ReentrantLock的区别"></a>Synchronized和ReentrantLock的区别</h3><ol>
+<li>Synchronized 是 JVM 层次的锁实现，ReentrantLock 是 JDK 层次的锁实现；</li>
+<li>Synchronized 的锁状态是无法在代码中直接判断的，但是 ReentrantLock 可以通过 ReentrantLock#isLocked 判断；</li>
+<li>Synchronized是非公平锁，ReentrantLock是可以是公平也可以是非公平的；</li>
+<li>Synchronized 是不可以被中断的，而 ReentrantLock#lockInterruptibly 方法是可以被中断的；</li>
+<li>在发生异常时Synchronized会自动释放锁（由javac编译时自动实现），而ReentrantLock需要开发者在finally块中显示释放锁；</li>
+<li>ReentrantLock获取锁的形式有多种：如立即返回是否成功的tryLock()，以及等待指定时长的获取，更加灵活；</li>
+<li>Synchronized在特定的情况下对于已经在等待的线程是后来的线程先获得锁（上文有说），而ReentrantLock对于已经在等待的线程一定是先来的线程先获得锁。</li>
+</ol>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://www.hollischuang.com/?s=%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%A4%9A%E7%BA%BF%E7%A8%8B" target="_blank" rel="noopener">Hollis-深入理解多线程系列</a></li>
+<li><a href="https://github.com/farmerjohngit/myblog" target="_blank" rel="noopener">farmerjohngit/myblog</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/123173443" target="_blank" rel="noopener">就一个Synchronized，也能跟面试官扯了半个小时？</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/15/IntelliJ Idea常用快捷键/" rel="next" title="IntelliJ IDEA 快捷键">
+                <i class="fa fa-chevron-left"></i> IntelliJ IDEA 快捷键
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/28/深入分析ThreadLocal/" rel="prev" title="深入分析 ThreadLocal">
+                深入分析 ThreadLocal <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="zer0ing">
+            
+              <p class="site-author-name" itemprop="name">zer0ing</p>
+              <p class="site-description motion-element" itemprop="description">Get busy living or get busy dying.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zeroing.young@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/ZeroingYang" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/5452588095" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronized-用法"><span class="nav-text">Synchronized 用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lock-unlock-规则"><span class="nav-text">lock/unlock 规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可见性"><span class="nav-text">可见性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有序性"><span class="nav-text">有序性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronized的实现原理"><span class="nav-text">Synchronized的实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同步方法"><span class="nav-text">同步方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步代码块"><span class="nav-text">同步代码块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-对象模型"><span class="nav-text">Java 对象模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OOP-Klass-Model"><span class="nav-text">OOP-Klass Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OOP-体系"><span class="nav-text">OOP 体系</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#oopDesc"><span class="nav-text">oopDesc</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Klass体系"><span class="nav-text">Klass体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#instanceKlass"><span class="nav-text">instanceKlass</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内存存储"><span class="nav-text">内存存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK-1-8-变化部分"><span class="nav-text">JDK 1.8 变化部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象头"><span class="nav-text">对象头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Moniter"><span class="nav-text">Moniter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ObjectMonitor-类的重要方法"><span class="nav-text">ObjectMonitor 类的重要方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#enter"><span class="nav-text">enter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#exit"><span class="nav-text">exit</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#wait"><span class="nav-text">wait</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#notify"><span class="nav-text">notify</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#notifyAll"><span class="nav-text">notifyAll</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结-1"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java虚拟机的锁优化技术"><span class="nav-text">Java虚拟机的锁优化技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程状态"><span class="nav-text">线程状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自旋锁"><span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁消除"><span class="nav-text">锁消除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁粗化"><span class="nav-text">锁粗化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#偏向锁"><span class="nav-text">偏向锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#轻量级锁"><span class="nav-text">轻量级锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronized和ReentrantLock的区别"><span class="nav-text">Synchronized和ReentrantLock的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考-1"><span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zer0ing</span>
+
+  
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

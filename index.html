@@ -332,6 +332,305 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/28/深入分析ThreadLocal/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zer0ing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zer0ing's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/28/深入分析ThreadLocal/" itemprop="url">深入分析 ThreadLocal</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-28T11:22:17+08:00">
+                2020-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          直接进入 ThreadLocal 源码。
+ThreadLocal 源码中有几个比较重要的方法：get()，set()，remove()，initialValue()，setInitialValue()。
+get 方法1234567891011121314151617181920// ThreadLo
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/28/深入分析ThreadLocal/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/深入分析Synchronized/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zer0ing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zer0ing's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/12/深入分析Synchronized/" itemprop="url">深入分析 Synchronized</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T09:02:41+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Synchronized 用法Synchronized 是 Java 提供的一个并发控制的关键字。主要有两种用法，分别是同步方法和同步代码块。
+通过编译可以发现，被 Synchronized 关键字修饰的同步块前后分别生成 monitorenter 和 monitorexit 字节码指令。monit
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/12/深入分析Synchronized/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/15/IntelliJ Idea常用快捷键/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -351,7 +650,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/12/15/IntelliJ Idea常用快捷键/" itemprop="url">Idea常用快捷键</a></h1>
+                <a class="post-title-link" href="/2019/12/15/IntelliJ Idea常用快捷键/" itemprop="url">IntelliJ IDEA 快捷键</a></h1>
         
 
         <div class="post-meta">
@@ -403,8 +702,13 @@
       
         
           
-          
-          
+          跳转
+Ctrl+Alt+[  ] 项目跳转
+Ctrl+Shift+A Find Action 
+Ctrl+E  文件跳转(Recent Files)
+Ctrl+Shift+E (Recent Changed Files) 
+Ctrl+Shift+Backspace 修改位置跳转(Last Edit 
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/12/15/IntelliJ Idea常用快捷键/#more" rel="contents">
@@ -458,7 +762,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/19/Spring系列——BeanDefinition/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/05/Java 类加载机制/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zer0ing">
@@ -477,7 +781,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/11/19/Spring系列——BeanDefinition/" itemprop="url">Spring系列——BeanDefinition</a></h1>
+                <a class="post-title-link" href="/2019/11/05/Java 类加载机制/" itemprop="url">Java 类加载机制</a></h1>
         
 
         <div class="post-meta">
@@ -489,8 +793,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-19T10:43:45+08:00">
-                2019-11-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-05T21:16:26+08:00">
+                2019-11-05
               </time>
             
 
@@ -499,6 +803,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -529,14 +855,13 @@
       
         
           
-          [TOC]
-解析 &lt;bean&gt; 的过程就是构造 BeanDefinition 对象的过程，&lt;bean&gt; 元素标签拥有的配置属性，BeanDefinition 均提供了相应的属性，与之一一对应。
-BeanDefinition 体系
-org.springframework.bea
+          类加载过程class 文件在虚拟机的整个生命周期包括加载、验证、准备、解析、初始化、使用和卸载 7 个阶段，通过 ClassLoader.loadClass() 方法可以加载一个 Java 类到虚拟机中，并返回 Class 类型的引用。
+
+加载：通过一个类的完全限定名查找此类的字节码文件，并利用字节
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/11/19/Spring系列——BeanDefinition/#more" rel="contents">
+            <a class="btn" href="/2019/11/05/Java 类加载机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -587,7 +912,7 @@ org.springframework.bea
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/28/Spring系列——IoC之解析Bean/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/20/Java-序列化与反序列化/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zer0ing">
@@ -606,7 +931,7 @@ org.springframework.bea
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/28/Spring系列——IoC之解析Bean/" itemprop="url">Spring系列——IoC之解析Bean</a></h1>
+                <a class="post-title-link" href="/2019/10/20/Java-序列化与反序列化/" itemprop="url">Java 序列化与反序列化</a></h1>
         
 
         <div class="post-meta">
@@ -618,138 +943,7 @@ org.springframework.bea
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-28T17:09:56+08:00">
-                2019-10-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          [TOC]
-前面的文章我们讲解了 Bean 的装载和注册，接下来继续讲解 Bean 的解析。上篇文章提到 Bean 的解析有两个方法：
-
-如果根节点或者子节点采用默认命名空间的话，则调用 parseDefaultElement(...) 方法，进行默认标签解析。
-
-否则，调用 BeanDefinit
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/28/Spring系列——IoC之解析Bean/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/20/Spring系列——IoC之Bean的装载和注册/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zer0ing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zer0ing's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/20/Spring系列——IoC之Bean的装载和注册/" itemprop="url">Spring系列——IoC之Bean的装载和注册</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-20T01:01:22+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-20T21:56:47+08:00">
                 2019-10-20
               </time>
             
@@ -760,6 +954,28 @@ org.springframework.bea
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -789,16 +1005,15 @@ org.springframework.bea
       
         
           
-          [TOC]
-Bean在容器中从发现到使用有以下过程：定位资源文件、装载 BeanDefinition、注册 BeanDefinition。
-
-
-定位资源文件：一般使用外部资源描述 Bean 对象，定位资源是指找到资源的过程。
-装载 BeanDefinition：解析 Resource 资源，将用户定
+          概念序列化是将 Java 对象转换成与平台无关的二进制流，而反序列化则是将二进制流恢复成原来的 Java 对象，二进制流便于保存到磁盘上或者在网络上传输。
+原因
+永久性保存对象，保存对象的字节序列到本地文件或者数据库中
+通过序列化以字节流的形式使对象在网络中进行传递和接收
+通过序列化在进程间传递对象
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/10/20/Spring系列——IoC之Bean的装载和注册/#more" rel="contents">
+            <a class="btn" href="/2019/10/20/Java-序列化与反序列化/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -849,7 +1064,7 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/13/Spring系列——IoC之Resource和ResourceLoader/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/从计算机内存模型到-Java-内存模型/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zer0ing">
@@ -868,7 +1083,7 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/13/Spring系列——IoC之Resource和ResourceLoader/" itemprop="url">Spring系列——IoC之Resource和ResourceLoader</a></h1>
+                <a class="post-title-link" href="/2019/10/10/从计算机内存模型到-Java-内存模型/" itemprop="url">从计算机内存模型到 Java 内存模型</a></h1>
         
 
         <div class="post-meta">
@@ -880,8 +1095,8 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-13T10:03:03+08:00">
-                2019-10-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-10T11:20:24+08:00">
+                2019-10-10
               </time>
             
 
@@ -890,6 +1105,28 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -920,11 +1157,15 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
       
         
           
-          Java SE中有一个标准类 java.net.URL，该类在 Java SE 中的定位为统一资源定位器（Uniform Resource Locator），但是我们知道其实现基本只限于网络形式发布的资源的查找和定位。然而，实际上资源的定义比较广泛，除了网络形式的资源，还有以二进制形式存在的、以文件
+          计算机内存模型CPU 缓存
+缓存可以缩小 CPU 与低速内存之间的差距。以三层缓存架构为例：
+
+L1 Cache：最接近 CPU, 容量最小（如32K、64K、256K等）、速度最高，每个核上都有一个L1 Cache。
+L2 Cache：容量更大（如256K）、速度较低，一般情况下，每个核上都有一个
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/10/13/Spring系列——IoC之Resource和ResourceLoader/#more" rel="contents">
+            <a class="btn" href="/2019/10/10/从计算机内存模型到-Java-内存模型/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -975,7 +1216,7 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/Spring系列——理解IoC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/理解 Spring IoC/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zer0ing">
@@ -994,7 +1235,7 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/07/Spring系列——理解IoC/" itemprop="url">Spring系列——理解IoC</a></h1>
+                <a class="post-title-link" href="/2019/10/07/理解 Spring IoC/" itemprop="url">理解 Spring IoC</a></h1>
         
 
         <div class="post-meta">
@@ -1016,6 +1257,28 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1058,7 +1321,7 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/10/07/Spring系列——理解IoC/#more" rel="contents">
+            <a class="btn" href="/2019/10/07/理解 Spring IoC/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1128,7 +1391,7 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/09/04/浅谈SPI机制/" itemprop="url">浅谈SPI机制</a></h1>
+                <a class="post-title-link" href="/2019/09/04/浅谈SPI机制/" itemprop="url">浅谈 SPI 机制</a></h1>
         
 
         <div class="post-meta">
@@ -1150,6 +1413,28 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1270,14 +1555,32 @@ Bean在容器中从发现到使用有以下过程：定位资源文件、装载 
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>

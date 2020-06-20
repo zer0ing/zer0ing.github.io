@@ -106,7 +106,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Java,">
 
 
 
@@ -120,17 +120,18 @@
 
 
 <meta name="description" content="SPI的概念面向的对象的设计里，我们一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。为了实现在模块装配的时候不用在程序里动态指明，这就需要一种服务发现机制。SPI 就是提供这样的一个机制：为某个接口寻找服务实现的机制。  SPI 全称为 Service Provider Interface ，是 J">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈SPI机制">
+<meta property="og:title" content="浅谈 SPI 机制">
 <meta property="og:url" content="http://yoursite.com/2019/09/04/浅谈SPI机制/index.html">
 <meta property="og:site_name" content="Zer0ing&#39;s Blog">
 <meta property="og:description" content="SPI的概念面向的对象的设计里，我们一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。为了实现在模块装配的时候不用在程序里动态指明，这就需要一种服务发现机制。SPI 就是提供这样的一个机制：为某个接口寻找服务实现的机制。  SPI 全称为 Service Provider Interface ，是 J">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/09/04/浅谈SPI机制/SPI机制.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/04/浅谈SPI机制/API对比SPI.png">
-<meta property="og:updated_time" content="2020-03-10T15:50:27.845Z">
+<meta property="og:updated_time" content="2020-06-20T15:17:32.781Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈SPI机制">
+<meta name="twitter:title" content="浅谈 SPI 机制">
 <meta name="twitter:description" content="SPI的概念面向的对象的设计里，我们一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。为了实现在模块装配的时候不用在程序里动态指明，这就需要一种服务发现机制。SPI 就是提供这样的一个机制：为某个接口寻找服务实现的机制。  SPI 全称为 Service Provider Interface ，是 J">
 <meta name="twitter:image" content="http://yoursite.com/2019/09/04/浅谈SPI机制/SPI机制.png">
 
@@ -168,7 +169,7 @@
 
 
 
-  <title>浅谈SPI机制 | Zer0ing's Blog</title>
+  <title>浅谈 SPI 机制 | Zer0ing's Blog</title>
   
 
 
@@ -352,7 +353,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">浅谈SPI机制</h1>
+          <h1 class="post-title" itemprop="name headline">浅谈 SPI 机制</h1>
         
 
         <div class="post-meta">
@@ -374,6 +375,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -424,11 +447,11 @@
 <p>接下来定义两个实现类，分别为 Apple 和 Banana。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Apple</span> <span class="keyword">implements</span> <span class="title">Fruit</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">color</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Red"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Banana</span> <span class="keyword">implements</span> <span class="title">Fruit</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">color</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Yellow"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>接下来 <code>META-INF/services</code> 文件夹下创建一个文件，名称为 Fruit 的全限定名 <code>org.apache.spi.Fruit</code> 。文件内容为实现类的全限定的类名，如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org<span class="selector-class">.apache</span><span class="selector-class">.spi</span><span class="selector-class">.Apple</span></span><br><span class="line">org<span class="selector-class">.apache</span><span class="selector-class">.spi</span><span class="selector-class">.Banana</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org.apache.spi.Apple</span><br><span class="line">org.apache.spi.Banana</span><br></pre></td></tr></table></figure>
 <p>做好所需的准备工作，接下来编写代码进行测试。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaSPITest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">color</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ServiceLoader&lt;Fruit&gt; serviceLoader = ServiceLoader.load(Fruit.class);</span><br><span class="line">        System.out.println(<span class="string">"Java SPI"</span>);</span><br><span class="line">        serviceLoader.forEach(Fruit::color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后来看一下测试结果，从测试结果可以看出，我们的两个实现类被成功的加载，并输出了相应的内容。</p>
-<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Java SPI</span><br><span class="line"><span class="keyword">Red</span></span><br><span class="line"><span class="keyword">Yellow</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Java SPI</span><br><span class="line">Red</span><br><span class="line">Yellow</span><br></pre></td></tr></table></figure>
 <h3 id="DriverManager-SPI"><a href="#DriverManager-SPI" class="headerlink" title="DriverManager SPI"></a>DriverManager SPI</h3><p><code>DriverManager</code> 是 JDBC 管理和注册不同数据库驱动的工具类。针对一个数据库可能会存在着不同的数据库驱动实现，在使用特定的驱动实现时不希望修改现有的代码才能达到目的，而希望通过一个简单的配置就可以达到效果。比如，我们现在有一个数据库的驱动 A，我们希望在程序里使用它而不修改代码。一种理想的选择就是我们将驱动A的信息加入到一个配置文件中，程序通过读取配置文件信息将 A 加载进来。而以后如果我们希望改用另外一个驱动 B 的时候，我们只需要将配置文件里的信息修改成驱动 B 即可。</p>
 <p>我们在运用 <code>Class.forName(&quot;com.mysql.jdbc.Driver&quot;)</code> 加载 mysql 驱动后，就会执行其中的静态代码把driver注册到 <code>DriverManager</code> 中，以便后续的使用。代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.mysql.jdbc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Driver</span> <span class="keyword">extends</span> <span class="title">NonRegisteringDriver</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">sql</span>.<span class="title">Driver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Driver</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DriverManager.registerDriver(<span class="keyword">new</span> Driver());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException var1) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Can't register driver!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -438,11 +461,11 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);</span><br><span class="line">Iterator&lt;Driver&gt; drivers = loadedDrivers.iterator();</span><br><span class="line">println(<span class="string">"DriverManager.initialize: jdbc.drivers = "</span> + loadedDrivers);</span><br></pre></td></tr></table></figure>
 <p>可见，<code>DriverManager</code> 初始化时也运用了 SPI 机制，使用 <code>ServiceLoader</code> 把写到配置文件里的 Driver 都加载了进来。打开 mysql-connector-java 的 jar 包，果然在 <code>META-INF/services</code> 下发现了上文中提到的接口路径，打开里面的内容，可以看到是 <code>com.mysql.jdbc.Driver</code> 。</p>
 <h3 id="Dubbo-SPI"><a href="#Dubbo-SPI" class="headerlink" title="Dubbo SPI"></a>Dubbo SPI</h3><p>SPI 机制在第三方框架中也有所应用，比如 Dubbo 就是通过 SPI 机制加载所有的组件。Dubbo 并未使用 Java SPI，而是重新实现了一套功能更强的 SPI 机制。Dubbo SPI 的相关逻辑被封装在了 <code>ExtensionLoader</code> 类中，通过 <code>ExtensionLoader</code> ，可以加载指定的实现类。Dubbo SPI 所需的配置文件需放置在 <code>META-INF/dubbo</code>路径下，配置内容如下。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apple = org<span class="selector-class">.apache</span><span class="selector-class">.spi</span><span class="selector-class">.Apple</span></span><br><span class="line">banana = org<span class="selector-class">.apache</span><span class="selector-class">.spi</span><span class="selector-class">.Banana</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apple = org.apache.spi.Apple</span><br><span class="line">banana = org.apache.spi.Banana</span><br></pre></td></tr></table></figure>
 <p>与 Java SPI 实现类配置不同，Dubbo SPI 是通过键值对的方式进行配置，这样我们可以按需加载指定的实现类。另外，在测试 Dubbo SPI 时，需要在 Fruit 接口上标注<code>@SPI</code>注解。下面来演示 Dubbo SPI 的用法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboSPITest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">color</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ExtensionLoader&lt;Fruit&gt; extensionLoader = </span><br><span class="line">            ExtensionLoader.getExtensionLoader(Fruit.class);</span><br><span class="line">        Fruit apple = extensionLoader.getExtension(<span class="string">"apple"</span>);</span><br><span class="line">        apple.color();</span><br><span class="line">        Fruit banana = extensionLoader.getExtension(<span class="string">"banana"</span>);</span><br><span class="line">        banana.color();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>测试结果是：</p>
-<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Dubbo SPI</span><br><span class="line"><span class="keyword">Red</span></span><br><span class="line"><span class="keyword">Yellow</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Dubbo SPI</span><br><span class="line">Red</span><br><span class="line">Yellow</span><br></pre></td></tr></table></figure>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本篇文章简单分别介绍了SPI机制的概念，以及Java SPI ，DriverManager SPI 与 Dubbo SPI 用法。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
 <li><a href="https://zhuanlan.zhihu.com/p/28909673" target="_blank" rel="noopener">Java SPI思想梳理</a></li>
@@ -464,6 +487,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+        </div>
+      
 
       
       
@@ -479,8 +508,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/10/07/Spring系列——理解IoC/" rel="prev" title="Spring系列——理解IoC">
-                Spring系列——理解IoC <i class="fa fa-chevron-right"></i>
+              <a href="/2019/10/07/理解 Spring IoC/" rel="prev" title="理解 Spring IoC">
+                理解 Spring IoC <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -560,14 +589,32 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>

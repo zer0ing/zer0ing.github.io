@@ -106,7 +106,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Java,Spring,">
 
 
 
@@ -119,16 +119,24 @@
 
 
 
-<meta name="description" content="Get busy living or get busy dying.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zer0ing&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+<meta name="description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
+<meta name="keywords" content="Java,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解 Spring IoC">
+<meta property="og:url" content="http://yoursite.com/2019/10/07/理解 Spring IoC/index.html">
 <meta property="og:site_name" content="Zer0ing&#39;s Blog">
-<meta property="og:description" content="Get busy living or get busy dying.">
+<meta property="og:description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/理解%20Spring%20IoC/SpringResourceLoader类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/理解%20Spring%20IoC/SpringBeanFactory类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/理解%20Spring%20IoC/SpringBeanDefinition类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/理解%20Spring%20IoC/SpringBeanDefinitionReader类图.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/07/理解%20Spring%20IoC/SpringApplicationContext类图.png">
+<meta property="og:updated_time" content="2020-06-20T15:17:44.869Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zer0ing&#39;s Blog">
-<meta name="twitter:description" content="Get busy living or get busy dying.">
+<meta name="twitter:title" content="理解 Spring IoC">
+<meta name="twitter:description" content="Spring IoC概述IoC 全称为 Inversion of Control ，翻译为 “控制反转”。 如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：  谁控制谁 控制什么 为何是反转 哪些方面反转  通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/07/理解%20Spring%20IoC/SpringResourceLoader类图.png">
 
 
 
@@ -158,13 +166,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2019/">
+  <link rel="canonical" href="http://yoursite.com/2019/10/07/理解 Spring IoC/">
 
 
 
 
 
-  <title>归档 | Zer0ing's Blog</title>
+  <title>理解 Spring IoC | Zer0ing's Blog</title>
   
 
 
@@ -193,7 +201,7 @@
     
   
 
-  <div class="container sidebar-position-right page-archive">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -317,237 +325,224 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
 
-      
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/理解 Spring IoC/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zer0ing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zer0ing's Blog">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">理解 Spring IoC</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-07T09:06:24+08:00">
+                2019-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/15/IntelliJ Idea常用快捷键/" itemprop="url">
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">IntelliJ IDEA 快捷键</span>
+                <span class="post-meta-item-text">分类于</span>
               
-            </a>
-        
-      </h2>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-15T20:58:53+08:00" content="2019-12-15">
-          12-15
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+          
 
+          
+          
 
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/05/Java 类加载机制/" itemprop="url">
-              
-                <span itemprop="name">Java 类加载机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-05T21:16:26+08:00" content="2019-11-05">
-          11-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <h3 id="Spring-IoC概述"><a href="#Spring-IoC概述" class="headerlink" title="Spring IoC概述"></a>Spring IoC概述</h3><p>IoC 全称为 <code>Inversion of Control</code> ，翻译为 “控制反转”。</p>
+<p>如何理解“控制反转”好呢？理解好它的关键在于我们需要回答如下四个问题：</p>
+<ol>
+<li>谁控制谁</li>
+<li>控制什么</li>
+<li>为何是反转</li>
+<li>哪些方面反转</li>
+</ol>
+<p>通过一个例子可以更方便理解IoC。假设一个人想喝新鲜橙汁，在没有饮品店的日子里，最直观的做法就是：买果汁机和橙子，自己动手制作。值得注意的是：这个过程是自己“主动”创造的过程，也就是说一杯橙汁需要自己创造。这种方法就对应在程序代码中直接 <code>new</code> 一个橙汁对象，橙汁全程由自己制作管理。</p>
+<p>然而到了今时今日，由于饮品店的盛行，当想喝橙汁时，第一想法就转换成了找到饮品店的联系方式，通过电话等渠道描述需要、地址、联系方式等，下订单等待，过一会儿就会有人送来橙汁了。在该过程中并没有“主动”去创造橙汁，橙汁是由饮品店创造的，而不是你，然而也完全达到了你的要求，甚至比你创造的要好上那么一些。这个过程饮品店相当于Spring容器，我们获取橙汁对象并不是自己在程序代码中 <code>new</code> 一个对象，而是直接在Spring容器（饮品店）直接获取，饮品店管理橙汁的制作过程。</p>
+<p>现在在看上面那四个问题，答案就显得非常明显了:</p>
+<ol>
+<li><strong>谁控制谁</strong>：在传统的开发模式下，我们都是采用直接 <code>new</code> 一个对象的方式来创建对象，也就是说你依赖的对象直接由你自己控制，有了 IoC 容器后，则直接由 IoC 容器来控制。所以“谁控制谁”，当然是 IoC 容器控制对象。</li>
+<li><strong>控制什么</strong>：控制对象。</li>
+<li><strong>为何是反转</strong>：没有 IoC 的时候我们都是在自己代码中主动去创建被依赖的对象，这是正转。但是有了 IoC 后，所依赖的对象直接由 IoC 容器创建后注入到被注入的对象中，依赖的对象由原来的主动获取变成被动接受，所以是反转。</li>
+<li><strong>哪些方面反转</strong>：所依赖对象的获取被反转。</li>
+</ol>
+<h4 id="注入方式"><a href="#注入方式" class="headerlink" title="注入方式"></a>注入方式</h4><p><code>IoC Service Provider</code>为被注入对象提供被依赖对象也有如下几种方式：构造方法注入、setter方法注入、接口注入。</p>
+<h5 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a>构造方法注入</h5><p>构造器注入，顾名思义就是被注入的对象通过在其构造方法中声明依赖对象的参数列表，让外部知道它需要哪些依赖对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Consumer(OrangeJuice orangeJuice) &#123;</span><br><span class="line">    <span class="keyword">this</span>.orangeJuice = orangeJuice;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="setter方法注入"><a href="#setter方法注入" class="headerlink" title="setter方法注入"></a>setter方法注入</h5><p>对于 JavaBean 对象而言，我们一般都是通过 getter 和 setter 方法来访问和设置对象的属性。所以，当前对象只需要为其所依赖的对象提供相对应的 setter 方法，就可以通过该方法将相应的依赖对象设置到被注入对象中。如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> OrangeJuice orangeJuice;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrangeJuice</span><span class="params">(OrangeJuice orangeJuice)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.orangeJuice = orangeJuice;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相比于构造器注入，setter 方式注入会显得比较宽松灵活些，它可以在任何时候进行注入（当然是在使用依赖对象之前），</p>
+<h5 id="接口注入"><a href="#接口注入" class="headerlink" title="接口注入"></a>接口注入</h5><p>接口方式注入带有侵入性，因为它需要被依赖的对象实现不必要的接口，一般都不推荐这种方式。</p>
+<h3 id="Spring-体系结构"><a href="#Spring-体系结构" class="headerlink" title="Spring 体系结构"></a>Spring 体系结构</h3><h4 id="Resource-体系"><a href="#Resource-体系" class="headerlink" title="Resource 体系"></a>Resource 体系</h4><p><code>org.springframework.core.io.Resource</code> 是对资源的抽象, 不同实现类代表了对不同资源的访问策略，如 ClassPathResource、RLResource、FileSystemResource 等。</p>
 
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/20/Java-序列化与反序列化/" itemprop="url">
-              
-                <span itemprop="name">Java 序列化与反序列化</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-20T21:56:47+08:00" content="2019-10-20">
-          10-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<h4 id="ResourceLoader-体系"><a href="#ResourceLoader-体系" class="headerlink" title="ResourceLoader 体系"></a>ResourceLoader 体系</h4><p>有了资源，就应该有资源加载，Spring 利用<code>org.springframework.core.io.ResourceLoader</code>来进行统一资源加载，类图如下：</p>
+<img src="/2019/10/07/理解%20Spring%20IoC/SpringResourceLoader类图.png">
+<h4 id="BeanFactory-体系"><a href="#BeanFactory-体系" class="headerlink" title="BeanFactory 体系"></a>BeanFactory 体系</h4><p><code>org.springframework.beans.factory.BeanFactory</code>，是一个非常纯粹的 bean 容器，它是 IoC 必备的数据结构，其中 BeanDefinition 是它的基本结构。BeanFactory 内部维护着一个BeanDefinition map ，并可根据 BeanDefinition 的描述进行 bean 的创建和管理。</p>
+<ul>
+<li>BeanFactory 有三个直接子类 ListableBeanFactory、HierarchicalBeanFactory 和 AutowireCapableBeanFactory 。</li>
+<li>DefaultListableBeanFactory 为默认实现，它实现了所有接口。</li>
+</ul>
+<img src="/2019/10/07/理解%20Spring%20IoC/SpringBeanFactory类图.png">
+<h4 id="BeanDefinition-体系"><a href="#BeanDefinition-体系" class="headerlink" title="BeanDefinition 体系"></a>BeanDefinition 体系</h4><p><code>org.springframework.beans.factory.config.BeanDefinition</code> ，用来描述 Spring 中的 Bean 对象。</p>
+<img src="/2019/10/07/理解%20Spring%20IoC/SpringBeanDefinition类图.png">
+<h4 id="BeanDefinitionReader-体系"><a href="#BeanDefinitionReader-体系" class="headerlink" title="BeanDefinitionReader 体系"></a>BeanDefinitionReader 体系</h4><p><code>org.springframework.beans.factory.support.BeanDefinitionReader</code> 的作用是读取 Spring 的配置文件的内容，并将其转换成 Ioc 容器内部的数据结构 ：BeanDefinition 。</p>
+<img src="/2019/10/07/理解%20Spring%20IoC/SpringBeanDefinitionReader类图.png">
+<h4 id="ApplicationContext-体系"><a href="#ApplicationContext-体系" class="headerlink" title="ApplicationContext 体系"></a>ApplicationContext 体系</h4><p><code>org.springframework.context.ApplicationContext</code>，它叫做应用上下文，是应用层容器。它继承 BeanFactory ，所以它是 BeanFactory 的扩展升级版。由于 ApplicationContext 的结构就决定了它与 BeanFactory 的不同，其主要区别有：</p>
+<ol>
+<li>继承 <code>org.springframework.context.MessageSource</code> 接口，提供国际化的标准访问策略。</li>
+<li>继承 <code>org.springframework.context.ApplicationEventPublisher</code> 接口，提供强大的事件机制。</li>
+<li>扩展 ResourceLoader ，可以用来加载多种 Resource ，可以灵活访问不同的资源。</li>
+<li>对 Web 应用的支持。</li>
+</ol>
+<img src="/2019/10/07/理解%20Spring%20IoC/SpringApplicationContext类图.png">
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文主要介绍 IoC 的概念，以及 IoC 的三种注入方式，然后介绍了Spring的六大体系，包括Resource、ResourceLoader、BeanFactory、BeanDefinition、BeanDefinitionReader以及ApplicationContext。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="http://svip.iocoder.cn/Spring/IoC-intro/" target="_blank" rel="noopener">【死磕 Spring】—— IoC 之深入理解 Spring IoC</a></li>
+</ol>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/10/从计算机内存模型到-Java-内存模型/" itemprop="url">
-              
-                <span itemprop="name">从计算机内存模型到 Java 内存模型</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-10T11:20:24+08:00" content="2019-10-10">
-          10-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/10/07/理解 Spring IoC/" itemprop="url">
-              
-                <span itemprop="name">理解 Spring IoC</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-07T09:06:24+08:00" content="2019-10-07">
-          10-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/04/浅谈SPI机制/" itemprop="url">
-              
-                <span itemprop="name">浅谈 SPI 机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-04T15:13:34+08:00" content="2019-09-04">
-          09-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/04/浅谈SPI机制/" rel="next" title="浅谈 SPI 机制">
+                <i class="fa fa-chevron-left"></i> 浅谈 SPI 机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/10/从计算机内存模型到-Java-内存模型/" rel="prev" title="从计算机内存模型到 Java 内存模型">
+                从计算机内存模型到 Java 内存模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -555,6 +550,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -575,8 +574,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -667,6 +675,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-IoC概述"><span class="nav-text">Spring IoC概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注入方式"><span class="nav-text">注入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#构造方法注入"><span class="nav-text">构造方法注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#setter方法注入"><span class="nav-text">setter方法注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#接口注入"><span class="nav-text">接口注入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-体系结构"><span class="nav-text">Spring 体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Resource-体系"><span class="nav-text">Resource 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ResourceLoader-体系"><span class="nav-text">ResourceLoader 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanFactory-体系"><span class="nav-text">BeanFactory 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanDefinition-体系"><span class="nav-text">BeanDefinition 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanDefinitionReader-体系"><span class="nav-text">BeanDefinitionReader 体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ApplicationContext-体系"><span class="nav-text">ApplicationContext 体系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -788,6 +812,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -1162,26 +1190,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
